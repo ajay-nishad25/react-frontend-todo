@@ -1,0 +1,181 @@
+.login-main-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #f5f7ff, #ffffff);
+    /* #0ABAB5 */
+    /* background: linear-gradient(180deg, #0ABAB5, #057685e5) */
+}
+
+.login-card {
+    width: 390px;
+    padding: 32px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 28px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.form-group input {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: #9ca3af;
+}
+
+.form-group input:focus {
+    border-color: #0ABAB5;
+}
+
+.login-button {
+    margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    /* border: none; */
+    border-radius: 10px;
+    background: #0abab4;
+    border: 1px solid #0abab4;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.login-button:focus {
+    background: #0abab4;
+}
+
+.login-button:hover {
+    opacity: 0.95;
+}
+
+.signup-text {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 14px;
+    color: #374151;
+}
+
+.signup-text span {
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+.button-loader {
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top: 2px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+
+
+
+.ios-modal {
+    animation: iosModalIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes iosModalIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-backdrop {
+    animation: iosBackdropFade 0.35s ease-out;
+}
+
+@keyframes iosBackdropFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.534);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.error-modal {
+    width: 320px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.error-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #dc2626;
+}
+
+.error-message {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 20px;
+}
+
+.input-error {
+    border-color: #dc2626 !important;
+}
