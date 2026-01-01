@@ -1,0 +1,40 @@
+.navbar-container {
+    height: 50px;
+    width: 100vw;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 10px 10px;
+    overflow: hidden;
+}
+
+.navbar-inner-container {
+    height: 100%;
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+@media (max-width: 768px) {
+    .navbar-inner-container {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 400;
+    }
+}
+
+.navbar-profile {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
