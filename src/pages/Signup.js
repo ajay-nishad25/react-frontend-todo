@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signUpUser } from "../redux/actions/authAction";
 import "styles/login.css";
+import { getValidEmailCheck } from "utils/getValidEmailCheck";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -15,9 +16,18 @@ export default function Signup() {
   });
 
   const [formError, setFormError] = useState({
-    email: false,
-    password: false,
-    confirmPassword: false,
+    email: {
+      status: false,
+      message: "",
+    },
+    password: {
+      status: false,
+      message: "",
+    },
+    confirmPassword: {
+      status: false,
+      message: "",
+    },
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,16 +53,69 @@ export default function Signup() {
   }
 
   function handleSignup() {
+    // valid email
+    const isValidEmail = getValidEmailCheck(signUpFormData.email);
+
+    // valid password
+    const isValidPassword = signUpFormData.password.trim().length >= 8;
+
+    // valid confirm password
+    const isValidConfirmPasswordLength =
+      signUpFormData.confirmPassword.trim().length >= 8;
+
+    // valid confirm password === password
+    const isValidConfirmPassword =
+      signUpFormData.password.trim() === signUpFormData.confirmPassword.trim();
+
     const errors = {
       email: !signUpFormData.email.trim(),
       password: !signUpFormData.password.trim(),
       confirmPassword: !signUpFormData.confirmPassword.trim(),
+
+      email: {
+        status: !signUpFormData.email.trim() || !isValidEmail,
+        message: !signUpFormData.email.trim()
+          ? "Please enter your email"
+          : !isValidEmail
+            ? "Please enter a valid email"
+            : "",
+      },
+      password: {
+        status: !signUpFormData.password.trim() || !isValidPassword,
+        message: !signUpFormData.password.trim()
+          ? "Please enter password"
+          : !isValidPassword
+            ? "Password must be at least 8 characters"
+            : "",
+      },
+      confirmPassword: {
+        status:
+          !signUpFormData.confirmPassword.trim() ||
+          !isValidConfirmPassword ||
+          !isValidConfirmPasswordLength,
+        message: !signUpFormData.confirmPassword.trim()
+          ? "Please confirm your password"
+          : !isValidConfirmPasswordLength
+            ? "Confirm password must be at least 8 characters"
+            : !isValidConfirmPassword
+              ? "Confirm password does not match"
+              : "",
+      },
     };
 
     setFormError(errors);
 
     // stop if any field is invalid
-    if (errors.email || errors.password || errors.confirmPassword) {
+    const isAnyFieldInvalid =
+      errors.email.status ||
+      errors.password.status ||
+      errors.confirmPassword.status ||
+      !isValidEmail ||
+      !isValidPassword ||
+      !isValidConfirmPassword ||
+      !isValidConfirmPasswordLength;
+
+    if (isAnyFieldInvalid) {
       return;
     }
 
@@ -95,6 +158,20 @@ export default function Signup() {
       password: "",
       confirmPassword: "",
     });
+    setFormError({
+      email: {
+        status: false,
+        message: "",
+      },
+      password: {
+        status: false,
+        message: "",
+      },
+      confirmPassword: {
+        status: false,
+        message: "",
+      },
+    });
     navigate("/login");
   }
 
@@ -116,8 +193,17 @@ export default function Signup() {
               placeholder="Enter your email"
               value={signUpFormData?.email}
               onChange={handleOnChange}
-              className={formError.email ? "input-error" : ""}
+              className={formError.email.status ? "input-error" : ""}
             />
+            <div className="error-slot">
+              <span
+                className={`input-error-message ${
+                  formError.email.status ? "visible" : ""
+                }`}
+              >
+                {formError.email.message}
+              </span>
+            </div>
           </div>
 
           <div className="form-group">
@@ -128,8 +214,17 @@ export default function Signup() {
               placeholder="Enter your password"
               value={signUpFormData?.password}
               onChange={handleOnChange}
-              className={formError.password ? "input-error" : ""}
+              className={formError.password.status ? "input-error" : ""}
             />
+            <div className="error-slot">
+              <span
+                className={`input-error-message ${
+                  formError.password.status ? "visible" : ""
+                }`}
+              >
+                {formError.password.message}
+              </span>
+            </div>
           </div>
 
           <div className="form-group">
@@ -140,8 +235,17 @@ export default function Signup() {
               placeholder="Confirm your password"
               value={signUpFormData?.confirmPassword}
               onChange={handleOnChange}
-              className={formError.confirmPassword ? "input-error" : ""}
+              className={formError.confirmPassword.status ? "input-error" : ""}
             />
+            <div className="error-slot">
+              <span
+                className={`input-error-message ${
+                  formError.confirmPassword.status ? "visible" : ""
+                }`}
+              >
+                {formError.confirmPassword.message}
+              </span>
+            </div>
           </div>
 
           <button className="login-button" onClick={handleSignup}>
