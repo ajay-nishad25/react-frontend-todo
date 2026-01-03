@@ -27,7 +27,7 @@
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
@@ -186,8 +186,17 @@
     border-color: #dc2626 !important;
 }
 
+.error-slot {
+    height: 16px;
+}
+
 .input-error-message {
-    font-size: 14px;
+    font-size: 12px;
     color: #ff101c;
-    /* margin-bottom: 20px; */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.input-error-message.visible {
+    opacity: 1;
 }

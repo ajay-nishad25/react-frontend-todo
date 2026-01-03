@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "styles/login.css";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/actions/authAction";
+import { getValidEmailCheck } from "utils/getValidEmailCheck";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,8 +15,14 @@ export default function Login() {
   });
 
   const [formError, setFormError] = useState({
-    email: false,
-    password: false,
+    email: {
+      status: false,
+      message: "",
+    },
+    password: {
+      status: false,
+      message: "",
+    },
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -32,20 +39,50 @@ export default function Login() {
     // clear error for this field
     setFormError((prev) => ({
       ...prev,
-      [name]: false,
+      [name]: {
+        status: false,
+        message: "",
+      },
     }));
   }
 
   function handleLogin() {
+    // valid email
+    const isValidEmail = getValidEmailCheck(loginFormData.email);
+
+    // valid password
+    const isValidPassword = loginFormData.password.trim().length >= 8;
+
     const errors = {
-      email: !loginFormData.email.trim(),
-      password: !loginFormData.password.trim(),
+      email: {
+        status: !loginFormData.email.trim() || !isValidEmail,
+        message: !loginFormData.email.trim()
+          ? "Please enter your email"
+          : !isValidEmail
+            ? "Please enter a valid email"
+            : "",
+      },
+      password: {
+        status: !loginFormData.password.trim() || !isValidPassword,
+        message: !loginFormData.password.trim()
+          ? "Please enter your password"
+          : !isValidPassword
+            ? "Password must be at least 8 characters"
+            : "",
+      },
     };
 
     setFormError(errors);
 
     // stop if any field is invalid
-    if (errors.email || errors.password) {
+
+    const isAnyFieldInvalid =
+      errors.email?.status ||
+      errors.password?.status ||
+      !isValidEmail ||
+      !isValidPassword;
+
+    if (isAnyFieldInvalid) {
       return;
     }
 
@@ -92,8 +129,17 @@ export default function Login() {
               placeholder="Enter your email"
               value={loginFormData?.email}
               onChange={handleOnChange}
-              className={formError.email ? "input-error" : ""}
+              className={formError.email.status ? "input-error" : ""}
             />
+            <div className="error-slot">
+              <span
+                className={`input-error-message ${
+                  formError.email.status ? "visible" : ""
+                }`}
+              >
+                {formError.email.message}
+              </span>
+            </div>
           </div>
 
           <div className="form-group">
@@ -104,8 +150,17 @@ export default function Login() {
               placeholder="Enter your password"
               value={loginFormData?.password}
               onChange={handleOnChange}
-              className={formError.password ? "input-error" : ""}
+              className={formError.password.status ? "input-error" : ""}
             />
+            <div className="error-slot">
+              <span
+                className={`input-error-message ${
+                  formError.password.status ? "visible" : ""
+                }`}
+              >
+                {formError.password.message}
+              </span>
+            </div>
           </div>
 
           <button
