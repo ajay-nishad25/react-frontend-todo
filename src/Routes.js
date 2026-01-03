@@ -23,7 +23,18 @@ function Routes() {
       children: [
         {
           path: "",
-          element: <div>Home Page</div>,
+          element: (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                paddingTop: "50px",
+              }}
+            >
+              Todo Board
+            </div>
+          ),
         },
       ],
     },

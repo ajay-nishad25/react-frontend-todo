@@ -6,7 +6,6 @@
     justify-content: center;
     align-items: center;
     padding: 10px 10px 10px 10px;
-    overflow: hidden;
 }
 
 .navbar-inner-container {
@@ -37,4 +36,71 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
+}
+
+
+.profile-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+/* Dropdown menu */
+.profile-menu {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 140px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 100;
+    /* 🔥 animation */
+    transform-origin: top right;
+    animation: dropdownScaleIn 0.18s ease-out forwards;
+}
+
+/* Scale + fade from top-right */
+@keyframes dropdownScaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(-6px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Menu items */
+.profile-menu-item {
+    padding: 10px 14px;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.profile-menu-item:hover {
+    background-color: #f3f4f6;
+}
+
+/* Disabled item (Hi user) */
+.profile-menu-item.disabled {
+    cursor: default;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.profile-menu-item.disabled:hover {
+    background: none;
+}
+
+/* Logout styling */
+.profile-menu-item.logout {
+    color: #dc2626;
+    font-weight: 500;
 }

@@ -170,6 +170,12 @@
     color: #dc2626;
 }
 
+.success-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: rgb(0, 145, 0);
+}
+
 .error-message {
     font-size: 14px;
     color: #374151;
@@ -178,4 +184,10 @@
 
 .input-error {
     border-color: #dc2626 !important;
+}
+
+.input-error-message {
+    font-size: 14px;
+    color: #ff101c;
+    /* margin-bottom: 20px; */
 }
