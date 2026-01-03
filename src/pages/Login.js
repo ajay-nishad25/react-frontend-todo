@@ -112,6 +112,16 @@ export default function Login() {
       email: "",
       password: "",
     });
+    setFormError({
+      email: {
+        status: false,
+        message: "",
+      },
+      password: {
+        status: false,
+        message: "",
+      },
+    });
     navigate("/signup");
   }
 
