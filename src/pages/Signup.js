@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signUpUser } from "../redux/actions/authAction";
 import "styles/login.css";
 
 export default function Signup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [signUpFormData, setSignupFormData] = useState({
     email: "",
@@ -19,7 +22,10 @@ export default function Signup() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({
+    status: null,
+    message: null,
+  });
   const [showErrorModal, setShowErrorModal] = useState(false);
 
   function handleOnChange(e) {
@@ -36,8 +42,6 @@ export default function Signup() {
     }));
   }
 
-  console.log("formError", formError);
-
   function handleSignup() {
     const errors = {
       email: !signUpFormData.email.trim(),
@@ -48,23 +52,36 @@ export default function Signup() {
     setFormError(errors);
 
     // stop if any field is invalid
-    if (errors.email || errors.password) {
+    if (errors.email || errors.password || errors.confirmPassword) {
       return;
     }
 
     setIsLoading(true);
-    setErrorMessage("");
+    // setErrorMessage("");
     setShowErrorModal(false);
 
-    console.log("Login data:", signUpFormData);
+    const payload = {
+      email: signUpFormData.email,
+      password: signUpFormData.password,
+    };
 
-    // simulate login API
-    setTimeout(() => {
-      setIsLoading(false);
-      // assume error from API
-      setErrorMessage("Account does not exist");
-      setShowErrorModal(true);
-    }, 1000);
+    dispatch(signUpUser(payload))
+      .then((res) => {
+        setIsLoading(false);
+        setErrorMessage({
+          status: 2,
+          message: res,
+        });
+        setShowErrorModal(true);
+      })
+      .catch((errorMsg) => {
+        setIsLoading(false);
+        setErrorMessage({
+          status: 1,
+          message: errorMsg,
+        });
+        setShowErrorModal(true);
+      });
   }
 
   function handleCloseModal() {
@@ -78,6 +95,10 @@ export default function Signup() {
       password: "",
       confirmPassword: "",
     });
+    navigate("/login");
+  }
+
+  function handleNavigateToLogin() {
     navigate("/login");
   }
 
@@ -136,11 +157,28 @@ export default function Signup() {
       {showErrorModal && (
         <div className="modal-backdrop">
           <div className="error-modal ios-modal">
-            <span className="error-title">Login Failed</span>
-            <p className="error-message">{errorMessage}</p>
-            <button className="login-button" onClick={handleCloseModal}>
-              Close
-            </button>
+            {errorMessage?.status === 1 ? (
+              <span className="error-title">Signup Failed</span>
+            ) : (
+              <span className="success-title">Signup Success</span>
+            )}
+
+            {errorMessage?.status === 1 ? (
+              <p className="error-message">{errorMessage?.message}</p>
+            ) : (
+              <p className="error-message">
+                {errorMessage?.message}, Now please login
+              </p>
+            )}
+            {errorMessage?.status === 1 ? (
+              <button className="login-button" onClick={handleCloseModal}>
+                Close
+              </button>
+            ) : (
+              <button className="login-button" onClick={handleNavigateToLogin}>
+                Back to login
+              </button>
+            )}
           </div>
         </div>
       )}

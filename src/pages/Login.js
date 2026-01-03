@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "styles/login.css";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/actions/authAction";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loginFormData, setLoginFormData] = useState({
     email: "",
@@ -50,15 +53,16 @@ export default function Login() {
     setErrorMessage("");
     setShowErrorModal(false);
 
-    console.log("Login data:", loginFormData);
-
-    // simulate login API
-    setTimeout(() => {
-      setIsLoading(false);
-      // assume error from API
-      setErrorMessage("Account does not exist");
-      setShowErrorModal(true);
-    }, 1000);
+    dispatch(loginUser(loginFormData))
+      .then(() => {
+        setIsLoading(false);
+        navigate("/", { replace: true });
+      })
+      .catch((errorMsg) => {
+        setIsLoading(false);
+        setErrorMessage(errorMsg);
+        setShowErrorModal(true);
+      });
   }
 
   function handleCloseModal() {
