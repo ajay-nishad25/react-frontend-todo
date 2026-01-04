@@ -1,0 +1,95 @@
+.page-layout {
+    height: calc(100vh - 50px);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    overflow-y: auto;
+    padding: 10px 10px 10px 10px;
+}
+
+.page-layout-inner-container {
+    height: 100%;
+    width: 80vw;
+    /* background-color: grey; */
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .page-layout-inner-container {
+        height: 100%;
+        width: 100%;
+        /* background-color: grey; */
+    }
+}
+
+.div-flex-row-w100,
+.div-flex-column-w100,
+.div-flex-row,
+.div-flex-column,
+.div-flex-end,
+.div-flex-start,
+.div-flex-center,
+.div-flex-space-between {
+    display: flex;
+}
+
+.div-flex-row {
+    flex-direction: row;
+}
+
+.div-flex-column {
+    flex-direction: column;
+}
+
+.div-flex-row-w100 {
+    flex-direction: row;
+    width: 100%;
+}
+
+.div-flex-column-w100 {
+    flex-direction: column;
+    width: 100%;
+}
+
+.div-flex-end {
+    justify-content: flex-end;
+}
+
+.div-flex-start {
+    justify-content: flex-start;
+}
+
+.div-flex-center {
+    justify-content: center;
+}
+
+.div-flex-space-between {
+    justify-content: space-between;
+}
+
+.text-sm {
+    font-size: 12px;
+}
+
+.text-md {
+    font-size: 14px;
+}
+
+.text-lg {
+    font-size: 16px;
+}
+
+.text-xl {
+    font-size: 18px;
+}
+
+.text-semi-bold {
+    font-weight: 600;
+}
+
+.text-bold {
+    font-weight: 700;
+}

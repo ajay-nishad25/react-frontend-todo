@@ -3,6 +3,7 @@ import { useRoutes } from "react-router-dom";
 import Layout from "layout/Layout";
 import Login from "pages/Login";
 import Signup from "pages/Signup";
+import TodoBoard from "pages/TodoBoard";
 
 function Routes() {
   let routes = useRoutes([
@@ -23,18 +24,7 @@ function Routes() {
       children: [
         {
           path: "",
-          element: (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                paddingTop: "50px",
-              }}
-            >
-              Todo Board
-            </div>
-          ),
+          element: <TodoBoard />,
         },
       ],
     },
