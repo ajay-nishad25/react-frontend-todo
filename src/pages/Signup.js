@@ -68,10 +68,6 @@ export default function Signup() {
       signUpFormData.password.trim() === signUpFormData.confirmPassword.trim();
 
     const errors = {
-      email: !signUpFormData.email.trim(),
-      password: !signUpFormData.password.trim(),
-      confirmPassword: !signUpFormData.confirmPassword.trim(),
-
       email: {
         status: !signUpFormData.email.trim() || !isValidEmail,
         message: !signUpFormData.email.trim()
