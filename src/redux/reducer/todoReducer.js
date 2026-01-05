@@ -1,7 +1,8 @@
-import { CREATE_TODO } from "../types";
+import { CREATE_TODO, GET_TODOS } from "../types";
 
 const initialState = {
   createTodo: {},
+  todoData: {},
 };
 
 export default function todoReducer(state = initialState, action) {
@@ -11,6 +12,11 @@ export default function todoReducer(state = initialState, action) {
       return {
         ...state,
         createTodo: payload,
+      };
+    case GET_TODOS:
+      return {
+        ...state,
+        todoData: payload,
       };
     default:
       return state;
