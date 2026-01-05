@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "styles/todo-board.css";
 import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
-import { useDispatch } from "react-redux";
-import { createTodo } from "../redux/actions/todoAction";
+import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { createTodo, getTodos } from "../redux/actions/todoAction";
 
 export default function TodoBoard() {
   const dispatch = useDispatch();
+  const todoReducer = useSelector((state) => state.todoReducer);
 
   const [openCreateTodoModel, setOpenCreateTodoModel] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -22,6 +24,21 @@ export default function TodoBoard() {
       message: "",
     },
   });
+
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    if (page === "") {
+      return;
+    }
+    dispatch(getTodos(page));
+  }, [dispatch, page]);
+
+  const { todoData } = todoReducer;
+
+  const todoDataList = todoData?.results;
+  const currentPage = todoData?.current_page;
+  const totalPages = todoData?.total_pages;
 
   function handleOpenCreateModel() {
     setIsClosing(false);
@@ -80,7 +97,7 @@ export default function TodoBoard() {
     }
 
     // call create api
-    dispatch(createTodo(formData)).then((res) => {
+    dispatch(createTodo(formData)).then(() => {
       setFormData({
         title: "",
         description: "",
@@ -95,12 +112,50 @@ export default function TodoBoard() {
         };
       });
       handleCloseModal();
+      dispatch(getTodos(1));
+      setPage(1);
     });
   }
+
+  const handlePrev = () => {
+    if (currentPage >= 1) {
+      setPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage <= totalPages) {
+      setPage(currentPage + 1);
+    }
+  };
+
+  const handleInputPageChange = (e) => {
+    const value = e.target.value;
+    // allow empty while typing
+    if (value === "") {
+      setPage("");
+      return;
+    }
+    const page = Number(value);
+    if (page > totalPages) {
+      return;
+    }
+    if (!isNaN(page)) {
+      setPage(page);
+    }
+  };
+
+  const handleInputBlur = () => {
+    let changedPage = Number(page);
+    if (!changedPage || changedPage < 1) changedPage = 1;
+    if (changedPage > totalPages) changedPage = totalPages;
+    setPage(changedPage);
+  };
 
   return (
     <div className="page-layout">
       <div className="page-layout-inner-container">
+        {/* task seach, filter and create section */}
         <div className="task-toolbar">
           <div className="search-box">
             <SearchIcon className="search-icon" />
@@ -109,6 +164,32 @@ export default function TodoBoard() {
               placeholder="Search tasks..."
               className="search-input"
             />
+          </div>
+          <div className="pagination-wrapper">
+            <button
+              className="page-btn"
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+            >
+              ‹
+            </button>
+            <div className="page-input-wrapper">
+              <input
+                type="text"
+                value={page}
+                onChange={handleInputPageChange}
+                onBlur={handleInputBlur}
+                className="page-input"
+              />
+              <div className="page-total">of {totalPages}</div>
+            </div>
+            <button
+              className="page-btn"
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+            >
+              ›
+            </button>
           </div>
 
           <div className="toolbar-actions">
@@ -124,8 +205,38 @@ export default function TodoBoard() {
             </div>
           </div>
         </div>
-      </div>
+        {todoDataList?.length > 0 && (
+          <div className="task-grid">
+            {todoDataList.map((task) => (
+              <div className="task-card" key={task.id}>
+                <div className="task-card-header">
+                  <h3 className="task-title">{task.title}</h3>
+                  <button className="delete-btn" title="Delete">
+                    <DeleteIcon />
+                  </button>
+                </div>
+                <p className="task-desc">
+                  {task.description?.trim() ? task.description : "N/A"}
+                </p>
+                <div className="task-card-footer">
+                  <span
+                    className={`task-status ${
+                      task.is_completed ? "completed" : "pending"
+                    }`}
+                  >
+                    {task.is_completed ? "Completed" : "Pending"}
+                  </span>
 
+                  <span className="task-date">
+                    {new Date(task.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {/* create task model */}
       {openCreateTodoModel && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div
