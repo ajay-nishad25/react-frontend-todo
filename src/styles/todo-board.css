@@ -309,23 +309,23 @@
     align-items: center;
 }
 
+
+
 .task-status {
     font-size: 12px;
-    padding: 6px 12px;
+    padding: 4px 12px;
     border-radius: 999px;
 }
 
+.task-status.completed {
+    background: #bafcd1;
+    color: #166534;
+}
+
 .task-status.pending {
-    background: #ffeda5;
+    background: #fef3c7;
     color: #92400e;
 }
-
-.task-status.completed {
-    background: #97ff97;
-    color: #227241;
-}
-
-
 
 .task-date {
     font-size: 12px;
