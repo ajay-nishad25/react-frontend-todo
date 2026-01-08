@@ -4,7 +4,7 @@ import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { createTodo, getTodos } from "../redux/actions/todoAction";
+import { createTodo, deleteTodo, getTodos } from "../redux/actions/todoAction";
 import EmptyState from "components/EmptyState";
 
 export default function TodoBoard() {
@@ -30,6 +30,10 @@ export default function TodoBoard() {
 
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
+  const [isDeleteClosing, setIsDeleteClosing] = useState(false);
+  const [todoToDelete, setTodoToDelete] = useState(null);
 
   useEffect(() => {
     if (page === "") return;
@@ -168,6 +172,31 @@ export default function TodoBoard() {
     setPage(changedPage);
   };
 
+  function handleCloseDeleteModal() {
+    setIsDeleteClosing(true);
+    setTimeout(() => {
+      setOpenDeleteConfirm(false);
+      setIsDeleteClosing(false);
+      setTodoToDelete(null);
+    }, 250); // match animation duration
+  }
+
+  function handleConfirmDelete() {
+    if (!todoToDelete) return;
+
+    dispatch(deleteTodo(todoToDelete)).then(() => {
+      dispatch(getTodos(1));
+      setPage(1);
+      setOpenDeleteConfirm(false);
+      setTodoToDelete(null);
+    });
+  }
+
+  function handleCancelDelete() {
+    setOpenDeleteConfirm(false);
+    setTodoToDelete(null);
+  }
+
   return (
     <div className="page-layout">
       <div className="page-layout-inner-container">
@@ -229,7 +258,15 @@ export default function TodoBoard() {
               <div className="task-card" key={task.id}>
                 <div className="task-card-header">
                   <h3 className="task-title">{task.title}</h3>
-                  <button className="delete-btn" title="Delete">
+                  <button
+                    className="delete-btn"
+                    title="Delete"
+                    onClick={() => {
+                      setTodoToDelete(task.id);
+                      setIsDeleteClosing(false);
+                      setOpenDeleteConfirm(true);
+                    }}
+                  >
                     <DeleteIcon />
                   </button>
                 </div>
@@ -292,6 +329,37 @@ export default function TodoBoard() {
               onChange={handleOnChange}
               className="modal-description"
             />
+          </div>
+        </div>
+      )}
+      {/* DELETE CONFIRMATION MODAL */}
+      {openDeleteConfirm && (
+        <div className="modal-overlay" onClick={handleCloseDeleteModal}>
+          <div
+            className={`confirm-modal ${
+              isDeleteClosing
+                ? "animate-close-create-model"
+                : "animate-open-create-model"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="confirm-title">Delete Todo</h3>
+
+            <p className="confirm-text">
+              Are you sure you want to delete this todo?
+              <br />
+              This action cannot be undone.
+            </p>
+
+            <div className="confirm-actions">
+              <button className="cancel-btn" onClick={handleCloseDeleteModal}>
+                Cancel
+              </button>
+
+              <button className="danger-btn" onClick={handleConfirmDelete}>
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       )}
