@@ -331,3 +331,59 @@
     font-size: 12px;
     color: #9ca3af;
 }
+
+
+/* CONFIRM MODAL */
+
+.confirm-modal {
+    width: 420px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.confirm-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.confirm-text {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* ACTIONS */
+.confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.danger-btn {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #f87171, #dc2626);
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+}

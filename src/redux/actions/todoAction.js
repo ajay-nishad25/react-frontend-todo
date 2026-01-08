@@ -1,5 +1,5 @@
-import { CREATE_TODO, GET_TODOS } from "../types";
-import { createTodoApi, getTodosApi } from "api/todoApi";
+import { CREATE_TODO, GET_TODOS, DELETE_TODO } from "../types";
+import { createTodoApi, getTodosApi, deleteTodoApi } from "api/todoApi";
 
 // signUpApi
 export const createTodo = (payload) => (dispatch) => {
@@ -26,6 +26,22 @@ export const getTodos = (page, debouncedSearch) => (dispatch) => {
     .then((data) => {
       dispatch({
         type: GET_TODOS,
+        payload: data,
+      });
+      // console.log("data", data);
+      return Promise.resolve(data);
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const deleteTodo = (todoId) => (dispatch) => {
+  // console.log("payload", payload);
+  return deleteTodoApi(todoId)
+    .then((data) => {
+      dispatch({
+        type: DELETE_TODO,
         payload: data,
       });
       // console.log("data", data);
