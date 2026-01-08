@@ -5,6 +5,7 @@ import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { createTodo, getTodos } from "../redux/actions/todoAction";
+import EmptyState from "components/EmptyState";
 
 export default function TodoBoard() {
   const dispatch = useDispatch();
@@ -27,18 +28,32 @@ export default function TodoBoard() {
 
   const [page, setPage] = useState(1);
 
+  const [searchInput, setSearchInput] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
   useEffect(() => {
-    if (page === "") {
-      return;
-    }
-    dispatch(getTodos(page));
-  }, [dispatch, page]);
+    if (page === "") return;
+    dispatch(getTodos(page, debouncedSearch));
+  }, [dispatch, debouncedSearch, page]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchInput);
+      setPage(1); // reset pagination when search changes
+    }, 600);
+
+    return () => clearTimeout(timer);
+  }, [searchInput]);
 
   const { todoData } = todoReducer;
 
   const todoDataList = todoData?.results;
   const currentPage = todoData?.current_page;
   const totalPages = todoData?.total_pages;
+
+  const handleSearchChange = (e) => {
+    setSearchInput(e.target.value);
+  };
 
   function handleOpenCreateModel() {
     setIsClosing(false);
@@ -111,6 +126,7 @@ export default function TodoBoard() {
           },
         };
       });
+      setSearchInput("");
       handleCloseModal();
       dispatch(getTodos(1));
       setPage(1);
@@ -163,6 +179,8 @@ export default function TodoBoard() {
               type="text"
               placeholder="Search tasks..."
               className="search-input"
+              value={searchInput}
+              onChange={handleSearchChange}
             />
           </div>
           <div className="pagination-wrapper">
@@ -234,6 +252,9 @@ export default function TodoBoard() {
               </div>
             ))}
           </div>
+        )}
+        {todoData?.results?.length === 0 && (
+          <EmptyState handleOpenCreateModel={handleOpenCreateModel} />
         )}
       </div>
       {/* create task model */}

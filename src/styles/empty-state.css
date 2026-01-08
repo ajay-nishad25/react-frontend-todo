@@ -1,0 +1,141 @@
+:root {
+    --bg: #ffffff;
+    --trunk-color: #2d3436;
+    --leaf-color-1: #6a8dff;
+    --leaf-color-2: #48c9b0;
+    --text-main: #2d3436;
+    --text-sub: #636e72;
+}
+
+.empty-state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    min-height: 400px;
+}
+
+.tree-box {
+    position: relative;
+    width: 150px;
+    height: 180px;
+    margin-bottom: 30px;
+}
+
+.trunk {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 5px;
+    height: 90px;
+    background: var(--trunk-color);
+    border-radius: 10px;
+    transform-origin: bottom;
+    animation: tree-grow 1s ease-out forwards,
+        tree-sway 4s ease-in-out infinite 1s;
+}
+
+.leaf-cluster {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    animation: leaf-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.c1 {
+    width: 50px;
+    height: 50px;
+    background: var(--leaf-color-1);
+    top: -20px;
+    left: -22px;
+    animation-delay: 1.2s;
+}
+
+.c2 {
+    width: 40px;
+    height: 40px;
+    background: var(--leaf-color-2);
+    top: 5px;
+    left: 15px;
+    animation-delay: 1.4s;
+}
+
+.c3 {
+    width: 30px;
+    height: 30px;
+    background: var(--leaf-color-1);
+    top: 25px;
+    left: -25px;
+    animation-delay: 1.6s;
+}
+
+@keyframes tree-grow {
+    from {
+        transform: scaleY(0);
+    }
+
+    to {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes tree-sway {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+@keyframes leaf-pop {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+.content-area h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: -1px;
+    margin: 0 0 10px;
+    color: var(--text-main);
+}
+
+.content-area p {
+    font-size: 0.95rem;
+    color: var(--text-sub);
+    margin-bottom: 30px;
+    line-height: 1.5;
+    max-width: 300px;
+}
+
+.plant-btn {
+    background: var(--text-main);
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.plant-btn:hover {
+    transform: translateY(-2px);
+    background: #000;
+    box-shadow: 0 15px 25px rgba(99, 177, 196, 0.3);
+}
