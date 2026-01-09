@@ -219,6 +219,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--search-input-color);
 }
 
 .page-btn:disabled {
