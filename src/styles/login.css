@@ -58,8 +58,10 @@
     padding: 12px;
     /* border: none; */
     border-radius: 10px;
-    background: #0abab4;
-    border: 1px solid #0abab4;
+    background: linear-gradient(135deg, #6a8dff, #5a6cff);
+    /* background: #0abab4;
+    border: 1px solid #0abab4; */
+    border: 1px solid #6a8dff;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
@@ -67,7 +69,8 @@
 }
 
 .login-button:focus {
-    background: #0abab4;
+    /* background: #0abab4; */
+    background: linear-gradient(135deg, #6a8dff, #5a6cff);
 }
 
 .login-button:hover {
