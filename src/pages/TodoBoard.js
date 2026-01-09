@@ -302,7 +302,7 @@ export default function TodoBoard() {
           <div className="task-grid">
             {todoDataList.map((task) => (
               <div
-                className="task-card"
+                className="task-card cursor-pointer"
                 key={task.id}
                 onClick={() => openTooUpdateModel(task)}
               >
