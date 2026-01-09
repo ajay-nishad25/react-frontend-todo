@@ -451,7 +451,7 @@ export default function TodoBoard() {
               className="modal-description"
             />
 
-            <label className="div-flex-row div-align-center task-desc">
+            <label className="div-flex-row div-align-center mark-completed-text">
               <input
                 type="checkbox"
                 name="is_completed"

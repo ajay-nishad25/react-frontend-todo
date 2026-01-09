@@ -1,7 +1,7 @@
 .navbar-container {
     height: 50px;
     width: 100vw;
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px -1px var(--navbar-border-bottom);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +52,7 @@
     top: 35px;
     right: 0;
     width: 140px;
-    background: #ffffff;
+    background: var(--bg-surface);
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -79,13 +79,13 @@
 .profile-menu-item {
     padding: 10px 14px;
     font-size: 14px;
-    color: #374151;
+    color: var(--text-primar);
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .profile-menu-item:hover {
-    background-color: #f3f4f6;
+    background-color: var(--menu-item-hover);
 }
 
 /* Disabled item (Hi user) */
@@ -101,6 +101,55 @@
 
 /* Logout styling */
 .profile-menu-item.logout {
-    color: #dc2626;
+    color: var(--danger);
     font-weight: 500;
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Switch */
+.theme-switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #d1d5db;
+    border-radius: 999px;
+    transition: 0.25s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.25s;
+}
+
+.theme-switch input:checked+.slider {
+    background: var(--primary);
+}
+
+.theme-switch input:checked+.slider::before {
+    transform: translateX(16px);
 }
