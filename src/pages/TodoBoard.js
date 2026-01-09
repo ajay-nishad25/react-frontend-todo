@@ -252,7 +252,7 @@ export default function TodoBoard() {
             <SearchIcon className="search-icon" />
             <input
               type="text"
-              placeholder="Search tasks..."
+              placeholder="Search todo..."
               className="search-input"
               value={searchInput}
               onChange={handleSearchChange}
