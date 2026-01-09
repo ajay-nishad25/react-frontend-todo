@@ -4,7 +4,12 @@ import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { createTodo, deleteTodo, getTodos } from "../redux/actions/todoAction";
+import {
+  createTodo,
+  deleteTodo,
+  getTodos,
+  updateTodo,
+} from "../redux/actions/todoAction";
 import EmptyState from "components/EmptyState";
 
 export default function TodoBoard() {
@@ -34,6 +39,16 @@ export default function TodoBoard() {
   const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false);
   const [isDeleteClosing, setIsDeleteClosing] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
+
+  const [openUpdateTodoModel, setOpenUpdateTodoModel] = useState(false);
+  const [isUpdateClosing, setIsUpdateClosing] = useState(false);
+
+  const [updateFormData, setUpdateFormData] = useState({
+    todo_id: "",
+    title: "",
+    description: "",
+    is_completed: false,
+  });
 
   useEffect(() => {
     if (page === "") return;
@@ -192,9 +207,40 @@ export default function TodoBoard() {
     });
   }
 
-  function handleCancelDelete() {
-    setOpenDeleteConfirm(false);
-    setTodoToDelete(null);
+  function openTooUpdateModel(todo) {
+    setUpdateFormData({
+      todo_id: todo.id,
+      title: todo.title || "",
+      description: todo.description || "",
+      is_completed: todo.is_completed || false,
+    });
+
+    setIsUpdateClosing(false);
+    setOpenUpdateTodoModel(true);
+  }
+
+  function handleUpdateChange(e) {
+    const { name, value, type, checked } = e.target;
+    setUpdateFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  }
+
+  function handleCloseUpdateModal() {
+    setIsUpdateClosing(true);
+    setTimeout(() => {
+      setOpenUpdateTodoModel(false);
+      setIsUpdateClosing(false);
+    }, 250);
+  }
+
+  function handleUpdateTodo() {
+    if (!updateFormData.title.trim()) return;
+    dispatch(updateTodo(updateFormData)).then(() => {
+      handleCloseUpdateModal();
+      dispatch(getTodos(page, debouncedSearch));
+    });
   }
 
   return (
@@ -255,13 +301,18 @@ export default function TodoBoard() {
         {todoDataList?.length > 0 && (
           <div className="task-grid">
             {todoDataList.map((task) => (
-              <div className="task-card" key={task.id}>
+              <div
+                className="task-card cursor-pointer"
+                key={task.id}
+                onClick={() => openTooUpdateModel(task)}
+              >
                 <div className="task-card-header">
                   <h3 className="task-title">{task.title}</h3>
                   <button
                     className="delete-btn"
                     title="Delete"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setTodoToDelete(task.id);
                       setIsDeleteClosing(false);
                       setOpenDeleteConfirm(true);
@@ -294,7 +345,7 @@ export default function TodoBoard() {
           <EmptyState handleOpenCreateModel={handleOpenCreateModel} />
         )}
       </div>
-      {/* create task model */}
+      {/* CREATE TASK MODEL */}
       {openCreateTodoModel && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div
@@ -360,6 +411,55 @@ export default function TodoBoard() {
                 Delete
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* UPDATE TODO MODAL */}
+      {openUpdateTodoModel && (
+        <div className="modal-overlay" onClick={handleCloseUpdateModal}>
+          <div
+            className={`create-task-modal ${
+              isUpdateClosing
+                ? "animate-close-create-model"
+                : "animate-open-create-model"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <input
+                type="text"
+                name="title"
+                placeholder="Title"
+                value={updateFormData.title}
+                onChange={handleUpdateChange}
+                className={`modal-title-input ${
+                  updateFormData.title === "" ? "input-error" : ""
+                }`}
+              />
+
+              <button className="save-btn" onClick={handleUpdateTodo}>
+                Update
+              </button>
+            </div>
+
+            <textarea
+              name="description"
+              placeholder="Write task description..."
+              value={updateFormData.description}
+              onChange={handleUpdateChange}
+              className="modal-description"
+            />
+
+            <label className="div-flex-row div-align-center task-desc">
+              <input
+                type="checkbox"
+                name="is_completed"
+                checked={updateFormData.is_completed}
+                onChange={handleUpdateChange}
+              />
+              Mark as completed
+            </label>
           </div>
         </div>
       )}
