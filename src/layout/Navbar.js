@@ -4,6 +4,7 @@ import userProfileImage from "assets/images/user-profile-icon.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/actions/authAction";
+import { ReactComponent as TaskLogo } from "assets/icons/task-logo.svg";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -36,7 +37,9 @@ export default function Navbar() {
   return (
     <div className="navbar-container">
       <div className="navbar-inner-container">
-        <span>Tasks</span>
+        <div className="div-flex-row div-align-center">
+          <TaskLogo />
+        </div>
 
         <div className="profile-wrapper" ref={menuRef}>
           <img

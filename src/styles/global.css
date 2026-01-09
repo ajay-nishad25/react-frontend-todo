@@ -25,6 +25,7 @@
     }
 }
 
+
 .div-flex-row-w100,
 .div-flex-column-w100,
 .div-flex-row,
@@ -32,6 +33,7 @@
 .div-flex-end,
 .div-flex-start,
 .div-flex-center,
+.div-align-center,
 .div-flex-space-between {
     display: flex;
 }
@@ -68,6 +70,10 @@
 
 .div-flex-space-between {
     justify-content: space-between;
+}
+
+.div-align-center {
+    align-items: center;
 }
 
 .text-sm {
