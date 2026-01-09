@@ -16,6 +16,10 @@
     border: 1px solid #e5e7eb;
 }
 
+.search-box:focus-within {
+    border-color: #5a6cff;
+}
+
 .search-icon {
     color: #6b7280;
 }

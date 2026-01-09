@@ -49,7 +49,9 @@
 }
 
 .form-group input:focus {
-    border-color: #0ABAB5;
+    /* old */
+    /* border-color: #0ABAB5; */
+    border-color: #5a6cff;
 }
 
 .login-button {
