@@ -11,9 +11,9 @@
     align-items: center;
     gap: 10px;
     padding: 8px 16px;
-    background: #ffffff;
+    background: var(--search-bg);
     border-radius: 20px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--search-border);
 }
 
 .search-box:focus-within {
@@ -29,7 +29,8 @@
     outline: none;
     width: 100%;
     font-size: 14px;
-    color: #374151;
+    color: var(--search-input-color);
+    background-color: var(--search-input-bg);
 }
 
 .search-input::placeholder {
@@ -48,16 +49,16 @@
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
+    background: var(--pagination-bg);
+    border: 1px solid var(--pagination-border);
     border-radius: 12px;
     cursor: pointer;
     font-size: 14px;
-    color: #374151;
+    color: var(--search-input-color);
 }
 
 .filter-btn:hover {
-    background: #f9fafb;
+    background: var(--menu-item-hover);
 }
 
 .new-task-btn {
@@ -97,7 +98,7 @@
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.45);
+    background: var(--overlay-model-bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,7 +108,7 @@
 /* MODAL */
 .create-task-modal {
     width: 520px;
-    background: #ffffff;
+    background: var(--delete-model-bg);
     border-radius: 12px;
     padding: 15px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
@@ -132,7 +133,8 @@
     border: none;
     outline: none;
     font-size: 16px;
-    color: #757575;
+    color: var(--text-primary);
+    background-color: var(--delete-model-bg);
 }
 
 .input-error::placeholder {
@@ -153,7 +155,13 @@
     font-size: 14px;
     border: none;
     outline: none;
-    color: #757575;
+    background-color: var(--delete-model-bg);
+    color: var(--text-secondary);
+}
+
+.mark-completed-text {
+    font-size: 14px;
+    color: var(--text-secondary);
 }
 
 /* 🔥 OPEN ANIMATION */
@@ -204,8 +212,8 @@
     height: 40px;
     border-radius: 12px;
     padding: 20px 14px;
-    border: 1px solid #e5e7eb;
-    background: #ffffff;
+    border: 1px solid var(--pagination-border);
+    background: var(--pagination-bg);
     font-size: 25px;
     cursor: pointer;
     display: flex;
@@ -234,7 +242,7 @@
     outline: none;
     font-size: 14px;
     font-weight: 500;
-    color: #111827;
+    color: var(--search-input-color);
     background: transparent;
 }
 
@@ -264,10 +272,10 @@
 }
 
 .task-card {
-    background: #ffffff;
+    background: var(--todo-card-bg);
     border-radius: 12px;
     padding: 15px 20px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--todo-card-border);
     display: flex;
     flex-direction: column;
     min-height: 140px;
@@ -283,7 +291,7 @@
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    color: var(--search-input-color);
 }
 
 .delete-btn {
@@ -300,7 +308,7 @@
 
 .task-desc {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--search-input-color);
     line-height: 1.5;
     white-space: nowrap;
     overflow: hidden;
@@ -322,13 +330,13 @@
 }
 
 .task-status.completed {
-    background: #bafcd1;
-    color: #166534;
+    background: var(--success-bg);
+    color: var(--success-text);
 }
 
 .task-status.pending {
-    background: #fef3c7;
-    color: #92400e;
+    background: var(--warning-bg);
+    color: var(--warning-text);
 }
 
 .task-date {
@@ -341,10 +349,10 @@
 
 .confirm-modal {
     width: 420px;
-    background: #ffffff;
+    background: var(--delete-model-bg);
     border-radius: 14px;
     padding: 20px;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 30px 80px var(--delete-model-border);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -356,12 +364,12 @@
     margin: 0;
     font-size: 18px;
     font-weight: 600;
-    color: #111827;
+    color: var(--text-primary);
 }
 
 .confirm-text {
     font-size: 14px;
-    color: #6b7280;
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 

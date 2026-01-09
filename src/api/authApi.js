@@ -35,6 +35,7 @@ export function logoutApi() {
     .post("/logout/")
     .then((res) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("theme");
       return Promise.resolve(res?.data?.message);
     })
     .catch((error) => {

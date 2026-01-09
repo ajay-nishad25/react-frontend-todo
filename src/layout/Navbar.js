@@ -7,11 +7,18 @@ import { logoutUser } from "../redux/actions/authAction";
 import { ReactComponent as TaskLogo } from "assets/icons/task-logo.svg";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [openMenu, setOpenMenu] = useState(false);
   const menuRef = useRef(null);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   function handleToggleMenu() {
     setOpenMenu((prev) => !prev);
@@ -51,7 +58,21 @@ export default function Navbar() {
 
           {openMenu && (
             <div className="profile-menu">
-              <div className="profile-menu-item disabled">Theme</div>
+              <div className="profile-menu-item theme-toggle">
+                <span>Theme</span>
+
+                <label className="theme-switch">
+                  <input
+                    type="checkbox"
+                    checked={theme === "dark"}
+                    onChange={() =>
+                      setTheme((prev) => (prev === "light" ? "dark" : "light"))
+                    }
+                  />
+                  <span className="slider" />
+                </label>
+              </div>
+
               <div className="profile-menu-item logout" onClick={handleLogout}>
                 Logout
               </div>
