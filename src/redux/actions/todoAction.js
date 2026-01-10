@@ -6,7 +6,6 @@ import {
   updateTodoApi,
 } from "api/todoApi";
 
-// signUpApi
 export const createTodo = (payload) => (dispatch) => {
   return createTodoApi(payload)
     .then((data) => {
@@ -21,21 +20,20 @@ export const createTodo = (payload) => (dispatch) => {
     });
 };
 
-// getTodosApi
-
-export const getTodos = (page, debouncedSearch) => (dispatch) => {
-  return getTodosApi(page, debouncedSearch)
-    .then((data) => {
-      dispatch({
-        type: GET_TODOS,
-        payload: data,
+export const getTodos =
+  (page, debouncedSearch, statusFilter, orderFilter) => (dispatch) => {
+    return getTodosApi(page, debouncedSearch, statusFilter, orderFilter)
+      .then((data) => {
+        dispatch({
+          type: GET_TODOS,
+          payload: data,
+        });
+        return Promise.resolve(data);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
       });
-      return Promise.resolve(data);
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
-};
+  };
 
 export const deleteTodo = (todoId) => (dispatch) => {
   return deleteTodoApi(todoId)

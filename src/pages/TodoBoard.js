@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "styles/todo-board.css";
 import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
@@ -50,10 +50,31 @@ export default function TodoBoard() {
     is_completed: false,
   });
 
+  const [openFilter, setOpenFilter] = useState(false);
+  const filterRef = useRef(null);
+
+  const [statusFilter, setStatusFilter] = useState(
+    localStorage.getItem("todo_status") || null,
+  );
+
+  const [orderFilter, setOrderFilter] = useState(
+    localStorage.getItem("todo_order") || null,
+  );
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (filterRef.current && !filterRef.current.contains(e.target)) {
+        setOpenFilter(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   useEffect(() => {
     if (page === "") return;
-    dispatch(getTodos(page, debouncedSearch));
-  }, [dispatch, debouncedSearch, page]);
+    dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
+  }, [dispatch, debouncedSearch, page, statusFilter, orderFilter]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -115,7 +136,7 @@ export default function TodoBoard() {
     }
   }
 
-  function handleSaveTask() {
+  function handleCreateTodo() {
     // validate title is not empty string
     if (!formData.title.trim()) {
       setFormInputError((prev) => {
@@ -147,7 +168,7 @@ export default function TodoBoard() {
       });
       setSearchInput("");
       handleCloseModal();
-      dispatch(getTodos(1));
+      dispatch(getTodos(1, debouncedSearch, statusFilter, orderFilter));
       setPage(1);
     });
   }
@@ -200,8 +221,8 @@ export default function TodoBoard() {
     if (!todoToDelete) return;
 
     dispatch(deleteTodo(todoToDelete)).then(() => {
-      dispatch(getTodos(1));
-      setPage(1);
+      dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
+      // setPage(1);
       setOpenDeleteConfirm(false);
       setTodoToDelete(null);
     });
@@ -239,8 +260,35 @@ export default function TodoBoard() {
     if (!updateFormData.title.trim()) return;
     dispatch(updateTodo(updateFormData)).then(() => {
       handleCloseUpdateModal();
-      dispatch(getTodos(page, debouncedSearch));
+      dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
     });
+  }
+
+  function handleStatusFilter(value) {
+    if (statusFilter === value) {
+      // toggle OFF
+      setStatusFilter(null);
+      localStorage.removeItem("todo_status");
+    } else {
+      // toggle ON
+      setStatusFilter(value);
+      localStorage.setItem("todo_status", value);
+    }
+
+    setPage(1);
+  }
+
+  function handleOrderFilter(value) {
+    if (orderFilter === value) {
+      // toggle OFF
+      setOrderFilter(null);
+      localStorage.removeItem("todo_order");
+    } else {
+      // toggle ON
+      setOrderFilter(value);
+      localStorage.setItem("todo_order", value);
+    }
+    setPage(1);
   }
 
   return (
@@ -286,10 +334,61 @@ export default function TodoBoard() {
           </div>
 
           <div className="toolbar-actions">
-            <button className="filter-btn">
-              <FilterIcon />
-              Filter
-            </button>
+            <div className="filter-wrapper" ref={filterRef}>
+              <button
+                className="filter-btn"
+                onClick={() => setOpenFilter((prev) => !prev)}
+              >
+                <FilterIcon />
+                Filter
+              </button>
+              {openFilter && (
+                <div className="filter-popover">
+                  <div className="filter-section">
+                    <div className="filter-title">Sort by status</div>
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={statusFilter === "false"}
+                        onClick={() => handleStatusFilter("false")}
+                      />
+                      Pending
+                    </label>
+
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={statusFilter === "true"}
+                        onClick={() => handleStatusFilter("true")}
+                      />
+                      Completed
+                    </label>
+                  </div>
+                  <div className="filter-divider" />
+                  <div className="filter-section">
+                    <div className="filter-title">Sort by order</div>
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={orderFilter === "1"}
+                        onClick={() => handleOrderFilter("1")}
+                      />
+                      Latest
+                    </label>
+
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={orderFilter === "2"}
+                        onClick={() => handleOrderFilter("2")}
+                      />
+                      Oldest
+                    </label>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <div className="new-task-btn">
               <button className="primary-btn" onClick={handleOpenCreateModel}>
                 <span className="plus">+</span>
@@ -367,8 +466,7 @@ export default function TodoBoard() {
                   formInputError.title.status ? "input-error" : ""
                 }`}
               />
-
-              <button className="save-btn" onClick={handleSaveTask}>
+              <button className="save-btn" onClick={handleCreateTodo}>
                 Save
               </button>
             </div>

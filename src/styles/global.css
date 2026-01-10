@@ -34,7 +34,7 @@
 .div-flex-start,
 .div-flex-center,
 .div-align-center,
-.div-flex-space-between {
+.div-space-between {
     display: flex;
 }
 
@@ -68,7 +68,7 @@
     justify-content: center;
 }
 
-.div-flex-space-between {
+.div-space-between {
     justify-content: space-between;
 }
 
