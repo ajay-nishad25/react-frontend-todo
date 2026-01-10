@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "styles/navbar.css";
-import userProfileImage from "assets/images/user-profile-icon.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/actions/authAction";
 import { ReactComponent as TaskLogo } from "assets/icons/task-logo.svg";
+import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
+import { ReactComponent as UserProfileImage } from "assets/icons/user-profile-icon.svg";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -14,6 +15,10 @@ export default function Navbar() {
   const menuRef = useRef(null);
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  const authReducer = useSelector((state) => state.authReducer);
+  const { userLoggedInData } = authReducer;
+  const userName = userLoggedInData?.userData?.user_name;
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -49,15 +54,14 @@ export default function Navbar() {
         </div>
 
         <div className="profile-wrapper" ref={menuRef}>
-          <img
-            src={userProfileImage}
+          <UserProfileImage
             className="navbar-profile"
-            alt="User profile"
             onClick={handleToggleMenu}
           />
 
           {openMenu && (
             <div className="profile-menu">
+              <div className="profile-menu-item">Hi, {userName}</div>
               <div className="profile-menu-item theme-toggle">
                 <span>Theme</span>
 
@@ -72,9 +76,11 @@ export default function Navbar() {
                   <span className="slider" />
                 </label>
               </div>
-
               <div className="profile-menu-item logout" onClick={handleLogout}>
-                Logout
+                <div className="div-flex-row div-align-center div-space-between">
+                  Logout
+                  <LogoutLogo />
+                </div>
               </div>
             </div>
           )}

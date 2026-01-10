@@ -11,11 +11,13 @@ export function createTodoApi(payload) {
     });
 }
 
-export function getTodosApi(page, debouncedSearch) {
+export function getTodosApi(page, debouncedSearch, statusFilter, orderFilter) {
   const params = {
     search: debouncedSearch,
     page: page,
   };
+  if (statusFilter !== null) params.is_completed = statusFilter;
+  if (orderFilter) params.sort_order = orderFilter;
   return api
     .get("/get-todos/", { params })
     .then((res) => {

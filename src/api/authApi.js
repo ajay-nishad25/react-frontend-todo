@@ -7,8 +7,12 @@ export function loginApi(payload) {
       const response = res.data;
       if (response) {
         localStorage.setItem("token", response.token);
+        localStorage.setItem("userData", JSON.stringify(response.user_data));
       }
-      Promise.resolve(res);
+      return Promise.resolve({
+        token: response.token,
+        userData: response.user_data,
+      });
     })
     .catch((error) => {
       if (error.response && error.response.status === 401) {
@@ -35,7 +39,10 @@ export function logoutApi() {
     .post("/logout/")
     .then((res) => {
       localStorage.removeItem("token");
+      localStorage.removeItem("userData");
       localStorage.removeItem("theme");
+      localStorage.removeItem("todo_order");
+      localStorage.removeItem("todo_status");
       return Promise.resolve(res?.data?.message);
     })
     .catch((error) => {
