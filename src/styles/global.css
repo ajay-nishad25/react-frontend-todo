@@ -100,6 +100,38 @@
     font-weight: 700;
 }
 
+.rg-5 {
+    row-gap: 5px;
+}
+
+.rg-10 {
+    row-gap: 10px;
+}
+
+.rg-15 {
+    row-gap: 15px;
+}
+
+.rg-20 {
+    row-gap: 20px;
+}
+
+.cg-5 {
+    column-gap: 5px;
+}
+
+.cg-10 {
+    column-gap: 10px;
+}
+
+.cg-15 {
+    column-gap: 15px;
+}
+
+.cg-20 {
+    column-gap: 20px;
+}
+
 .cursor-pointer {
     cursor: pointer;
 }

@@ -97,19 +97,6 @@
   background: none;
 }
 
-/* Logout styling */
-.profile-menu-item.logout {
-  color: var(--danger);
-  font-weight: 500;
-}
-
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
 /* Switch */
 .theme-switch {
   position: relative;
@@ -144,10 +131,10 @@
   transition: 0.25s;
 }
 
-.theme-switch input:checked + .slider {
+.theme-switch input:checked+.slider {
   background: var(--primary);
 }
 
-.theme-switch input:checked + .slider::before {
+.theme-switch input:checked+.slider::before {
   transform: translateX(16px);
 }
