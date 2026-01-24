@@ -1,155 +1,140 @@
 .navbar-container {
-    height: 50px;
-    width: 100vw;
-    box-shadow: 0 2px 4px -1px var(--navbar-border-bottom);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 10px 10px 10px;
+  height: 50px;
+  width: 100vw;
+  box-shadow: 0 2px 4px -1px var(--navbar-border-bottom);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 10px 10px;
 }
 
 .navbar-inner-container {
+  height: 100%;
+  width: 80vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .navbar-inner-container {
     height: 100%;
-    width: 80vw;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 20px;
     font-weight: 400;
-}
-
-@media (max-width: 768px) {
-    .navbar-inner-container {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 20px;
-        font-weight: 400;
-    }
+  }
 }
 
 .navbar-profile {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
 }
-
 
 .profile-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
-
 
 /* Dropdown menu */
 .profile-menu {
-    position: absolute;
-    top: 35px;
-    right: 0;
-    width: 140px;
-    background: var(--bg-surface);
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-    z-index: 100;
-    /* 🔥 animation */
-    transform-origin: top right;
-    animation: dropdownScaleIn 0.18s ease-out forwards;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 140px;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 100;
+  /* 🔥 animation */
+  transform-origin: top right;
+  animation: dropdownScaleIn 0.18s ease-out forwards;
 }
 
 /* Scale + fade from top-right */
 @keyframes dropdownScaleIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.85) translateY(-6px);
-    }
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(-6px);
+  }
 
-    100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* Menu items */
 .profile-menu-item {
-    padding: 10px 14px;
-    font-size: 14px;
-    color: var(--text-primar);
-    cursor: pointer;
-    transition: background 0.2s ease;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--text-primar);
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .profile-menu-item:hover {
-    background-color: var(--menu-item-hover);
+  background-color: var(--menu-item-hover);
 }
 
 /* Disabled item (Hi user) */
 .profile-menu-item.disabled {
-    cursor: default;
-    font-weight: 500;
-    color: #6b7280;
+  cursor: default;
+  font-weight: 500;
+  color: #6b7280;
 }
 
 .profile-menu-item.disabled:hover {
-    background: none;
-}
-
-/* Logout styling */
-.profile-menu-item.logout {
-    color: var(--danger);
-    font-weight: 500;
-}
-
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+  background: none;
 }
 
 /* Switch */
 .theme-switch {
-    position: relative;
-    width: 36px;
-    height: 20px;
+  position: relative;
+  width: 36px;
+  height: 20px;
 }
 
 .theme-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: #d1d5db;
-    border-radius: 999px;
-    transition: 0.25s;
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #d1d5db;
+  border-radius: 999px;
+  transition: 0.25s;
 }
 
 .slider::before {
-    content: "";
-    position: absolute;
-    height: 14px;
-    width: 14px;
-    left: 3px;
-    top: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: 0.25s;
+  content: "";
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.25s;
 }
 
 .theme-switch input:checked+.slider {
-    background: var(--primary);
+  background: var(--primary);
 }
 
 .theme-switch input:checked+.slider::before {
-    transform: translateX(16px);
+  transform: translateX(16px);
 }

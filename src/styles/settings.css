@@ -1,0 +1,126 @@
+.settings-modal {
+  width: 820px;
+  min-height: 540px;
+  background: #000000;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.95);
+}
+
+.settings-tab-header,
+.settings-header {
+  height: 60px;
+  padding: 10px 12px;
+}
+
+.settings-tab-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settings-main-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+}
+
+.settings-left-panel {
+  background: var(--setting-left-panel-bg);
+}
+
+.settings-menu-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.settings-menu-item:hover {
+  color: var(--text-secondary);
+  background: var(--settings-menu-item-hover);
+}
+
+.settings-menu-item.active {
+  background: var(--settings-menu-item-active);
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.settings-logout {
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #dc2626;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.settings-logout:hover {
+  background: #fee2e2;
+}
+
+.settings-right-panel {
+  background: var(--settings-right-panel);
+}
+
+.settings-tab-content {
+  flex: 1;
+  padding: 0px 10px 10px 10px;
+}
+
+.profile-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
+
+
+.content-item-row {
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--setting-left-panel-bg);
+}
+
+.content-item-text {
+  gap: 2px;
+}
+
+.content-item-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.content-item-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.security-row {
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--setting-left-panel-bg);
+}
+
+.security-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.security-input::placeholder {
+  color: var(--text-secondary);
+}

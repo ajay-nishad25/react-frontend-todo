@@ -100,6 +100,94 @@
     font-weight: 700;
 }
 
+.rg-5 {
+    row-gap: 5px;
+}
+
+.rg-10 {
+    row-gap: 10px;
+}
+
+.rg-15 {
+    row-gap: 15px;
+}
+
+.rg-20 {
+    row-gap: 20px;
+}
+
+.cg-5 {
+    column-gap: 5px;
+}
+
+.cg-10 {
+    column-gap: 10px;
+}
+
+.cg-15 {
+    column-gap: 15px;
+}
+
+.cg-20 {
+    column-gap: 20px;
+}
+
+.padding-v5 {
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+
+.padding-v10 {
+    padding-top: 10px;
+    padding-bottom: 10px
+}
+
+.padding-v15 {
+    padding-top: 15px;
+    padding-bottom: 15px
+}
+
+.padding-v20 {
+    padding-top: 20px;
+    padding-bottom: 20px
+}
+
+.padding-h5 {
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+.padding-h10 {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+.padding-h15 {
+    padding-left: 15px;
+    padding-right: 15px
+}
+
+.padding-h20 {
+    padding-left: 20px;
+    padding-right: 20px
+}
+
+
+
 .cursor-pointer {
     cursor: pointer;
+}
+
+.theme-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #6a8dff, #5a6cff);
+    color: #ffffff;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 12px;
 }
