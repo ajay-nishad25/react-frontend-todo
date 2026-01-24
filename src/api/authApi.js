@@ -40,7 +40,8 @@ export function logoutApi() {
     .then((res) => {
       localStorage.removeItem("token");
       localStorage.removeItem("userData");
-      localStorage.removeItem("theme");
+      localStorage.removeItem("selectedTheme");
+      document.documentElement.setAttribute("data-theme", "light");
       localStorage.removeItem("todo_order");
       localStorage.removeItem("todo_status");
       return Promise.resolve(res?.data?.message);

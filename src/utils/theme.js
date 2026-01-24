@@ -1,4 +1,4 @@
-const THEME_KEY = "selected-theme";
+const THEME_KEY = "selectedTheme";
 
 export function getTheme() {
   return localStorage.getItem(THEME_KEY) || "light";
