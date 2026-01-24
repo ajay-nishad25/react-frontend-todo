@@ -8,18 +8,14 @@ import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
 import { ReactComponent as ProfileIcon } from "assets/icons/profile-icon.svg";
 import { ReactComponent as AppearanceIcon } from "assets/icons/apperance-icon.svg";
 import { ReactComponent as SecurityIcon } from "assets/icons/security-icon.svg";
+import { getTheme, setTheme } from "utils/theme";
 
 export default function SettingsModal({ isClosing, onClose }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("profile");
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const [theme, setThemeState] = useState(getTheme());
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { user_name, email } = userData;
@@ -35,6 +31,12 @@ export default function SettingsModal({ isClosing, onClose }) {
     appearance: "Appearance",
     security: "Security",
   };
+
+  function handleToggleTheme() {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setThemeState(newTheme);
+    setTheme(newTheme);
+  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -153,11 +155,7 @@ export default function SettingsModal({ isClosing, onClose }) {
                       <input
                         type="checkbox"
                         checked={theme === "dark"}
-                        onChange={() =>
-                          setTheme((prev) =>
-                            prev === "light" ? "dark" : "light",
-                          )
-                        }
+                        onChange={handleToggleTheme}
                       />
                       <span className="slider" />
                     </label>
