@@ -86,11 +86,12 @@ export default function Navbar() {
         </div>
       </div>
       {/* SETTINGS MODAL */}
-      <SettingsModal
-        isOpen={openSettingModel}
-        isClosing={isSettingClosing}
-        onClose={handleCloseSettingModal}
-      />
+      {openSettingModel && (
+        <SettingsModal
+          isClosing={isSettingClosing}
+          onClose={handleCloseSettingModal}
+        />
+      )}
     </>
   );
 }

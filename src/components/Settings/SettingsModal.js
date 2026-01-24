@@ -9,7 +9,7 @@ import { ReactComponent as ProfileIcon } from "assets/icons/profile-icon.svg";
 import { ReactComponent as AppearanceIcon } from "assets/icons/apperance-icon.svg";
 import { ReactComponent as SecurityIcon } from "assets/icons/security-icon.svg";
 
-export default function SettingsModal({ isOpen, isClosing, onClose }) {
+export default function SettingsModal({ isClosing, onClose }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,8 +20,6 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  if (!isOpen) return null;
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { user_name, email } = userData;
