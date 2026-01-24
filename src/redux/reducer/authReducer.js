@@ -1,4 +1,4 @@
-import { LOGIN, SIGNUP, LOGOUT } from "../types";
+import { LOGIN, SIGNUP, LOGOUT, RESET_PASSWORD } from "../types";
 
 const token = localStorage.getItem("token");
 const userData = token ? JSON.parse(localStorage.getItem("userData")) : null;
@@ -12,12 +12,14 @@ const getInitialState = () => {
       },
       userSignUpData: null,
       userLogoutData: null,
+      resetPasswordData: null,
     };
   }
   return {
     userLoggedInData: null,
     userSignUpData: null,
     userLogoutData: null,
+    resetPasswordData: null,
   };
 };
 
@@ -32,7 +34,6 @@ export default function authReducer(state = initialState, action) {
         ...state,
         userLoggedInData: payload,
       };
-
     case SIGNUP:
       return {
         ...state,
@@ -43,7 +44,11 @@ export default function authReducer(state = initialState, action) {
         ...state,
         userLogoutData: payload,
       };
-
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        resetPasswordData: payload,
+      };
     default:
       return state;
   }
