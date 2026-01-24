@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "styles/settings.css";
 import { useDispatch } from "react-redux";
 import { logoutUser, resetPassword } from "../../redux/actions/authAction";
@@ -172,6 +172,15 @@ export default function SettingsModal({ isClosing, onClose }) {
         setIsResetLoading(false);
       });
   }
+
+  // auto dismiss alter msg
+  useEffect(() => {
+    if (!resetResponse.type) return;
+    const timer = setTimeout(() => {
+      setResetResponse({ type: null, message: "" });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [resetResponse.type]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
