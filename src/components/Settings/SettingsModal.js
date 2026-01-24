@@ -8,6 +8,8 @@ import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
 import { ReactComponent as ProfileIcon } from "assets/icons/profile-icon.svg";
 import { ReactComponent as AppearanceIcon } from "assets/icons/apperance-icon.svg";
 import { ReactComponent as SecurityIcon } from "assets/icons/security-icon.svg";
+import { ReactComponent as EyeOpenIcon } from "assets/icons/eye-open.svg";
+import { ReactComponent as EyeClosedIcon } from "assets/icons/eye-closed.svg";
 import { getTheme, setTheme } from "utils/theme";
 
 export default function SettingsModal({ isClosing, onClose }) {
@@ -35,6 +37,19 @@ export default function SettingsModal({ isClosing, onClose }) {
   });
 
   const [isResetLoading, setIsResetLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState({
+    current: false,
+    new: false,
+    confirm: false,
+  });
+
+  function togglePasswordVisibility(field) {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  }
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { user_name, email } = userData;
@@ -73,6 +88,11 @@ export default function SettingsModal({ isClosing, onClose }) {
 
   function handleTabToogle(tab) {
     if (tab !== "security") {
+      setShowPassword({
+        current: false,
+        new: false,
+        confirm: false,
+      });
       setResetFormData({
         currentPassword: "",
         newPassword: "",
@@ -160,6 +180,11 @@ export default function SettingsModal({ isClosing, onClose }) {
           currentPassword: "",
           newPassword: "",
           confirmPassword: "",
+        });
+        setShowPassword({
+          current: false,
+          new: false,
+          confirm: false,
         });
       })
       .catch((err) => {
@@ -317,14 +342,26 @@ export default function SettingsModal({ isClosing, onClose }) {
                         Current Password
                       </label>
                       <div className="div-flex-column">
-                        <input
-                          type="password"
-                          name="currentPassword"
-                          placeholder="Enter current password"
-                          value={resetFormData.currentPassword}
-                          onChange={handleResetInputChange}
-                          className="security-input"
-                        />
+                        <div className="password-field">
+                          <input
+                            type={showPassword.current ? "text" : "password"}
+                            name="currentPassword"
+                            placeholder="Enter current password"
+                            value={resetFormData.currentPassword}
+                            onChange={handleResetInputChange}
+                            className="security-input"
+                          />
+                          <span
+                            className="password-toggle"
+                            onClick={() => togglePasswordVisibility("current")}
+                          >
+                            {showPassword.current ? (
+                              <EyeClosedIcon />
+                            ) : (
+                              <EyeOpenIcon />
+                            )}
+                          </span>
+                        </div>
                         <div className="error-slot">
                           <span
                             className={`input-error-message ${
@@ -341,14 +378,26 @@ export default function SettingsModal({ isClosing, onClose }) {
                     <div className="div-flex-column security-row">
                       <label className="content-item-title">New Password</label>
                       <div className="div-flex-column">
-                        <input
-                          type="password"
-                          name="newPassword"
-                          placeholder="Enter new password"
-                          value={resetFormData.newPassword}
-                          onChange={handleResetInputChange}
-                          className="security-input"
-                        />
+                        <div className="password-field">
+                          <input
+                            type={showPassword.new ? "text" : "password"}
+                            name="newPassword"
+                            placeholder="Enter new password"
+                            value={resetFormData.newPassword}
+                            onChange={handleResetInputChange}
+                            className="security-input"
+                          />
+                          <span
+                            className="password-toggle"
+                            onClick={() => togglePasswordVisibility("new")}
+                          >
+                            {showPassword.new ? (
+                              <EyeClosedIcon />
+                            ) : (
+                              <EyeOpenIcon />
+                            )}
+                          </span>
+                        </div>
                         <div className="error-slot">
                           <span
                             className={`input-error-message ${
@@ -365,14 +414,26 @@ export default function SettingsModal({ isClosing, onClose }) {
                         Confirm Password
                       </label>
                       <div className="div-flex-column">
-                        <input
-                          type="password"
-                          name="confirmPassword"
-                          placeholder="Confirm new password"
-                          value={resetFormData.confirmPassword}
-                          onChange={handleResetInputChange}
-                          className="security-input"
-                        />
+                        <div className="password-field">
+                          <input
+                            type={showPassword.confirm ? "text" : "password"}
+                            name="confirmPassword"
+                            placeholder="Confirm new password"
+                            value={resetFormData.confirmPassword}
+                            onChange={handleResetInputChange}
+                            className="security-input"
+                          />
+                          <span
+                            className="password-toggle"
+                            onClick={() => togglePasswordVisibility("confirm")}
+                          >
+                            {showPassword.confirm ? (
+                              <EyeClosedIcon />
+                            ) : (
+                              <EyeOpenIcon />
+                            )}
+                          </span>
+                        </div>
                         <div className="error-slot">
                           <span
                             className={`input-error-message ${

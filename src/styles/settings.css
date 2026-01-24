@@ -180,3 +180,36 @@
     transform: translateY(0);
   }
 }
+
+/* view password eye */
+.password-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field .security-input {
+  width: 100%;
+  padding-right: 42px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.password-toggle:hover {
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+.password-toggle svg {
+  width: 18px;
+  height: 18px;
+}
