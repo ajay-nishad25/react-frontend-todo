@@ -58,6 +58,7 @@
 .settings-logout {
   padding: 10px 12px;
   font-size: 12px;
+  font-weight: 500;
   color: #dc2626;
   cursor: pointer;
   transition: background 0.2s ease;
