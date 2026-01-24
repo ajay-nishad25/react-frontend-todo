@@ -34,6 +34,8 @@ export default function SettingsModal({ isClosing, onClose }) {
     message: "",
   });
 
+  const [isResetLoading, setIsResetLoading] = useState(false);
+
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { user_name, email } = userData;
 
@@ -146,6 +148,8 @@ export default function SettingsModal({ isClosing, onClose }) {
       confirm_password: confirmPassword,
     };
 
+    setIsResetLoading(true);
+
     dispatch(resetPassword(resetPasswordPayload))
       .then((res) => {
         setResetResponse({
@@ -163,6 +167,9 @@ export default function SettingsModal({ isClosing, onClose }) {
           type: "error",
           message: err || "Failed to reset password. Please try again.",
         });
+      })
+      .finally(() => {
+        setIsResetLoading(false);
       });
   }
 
@@ -374,6 +381,7 @@ export default function SettingsModal({ isClosing, onClose }) {
                       <button
                         className="theme-btn"
                         onClick={handleResetPassword}
+                        disabled={isResetLoading}
                       >
                         Reset Password
                       </button>
