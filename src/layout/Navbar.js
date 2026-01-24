@@ -44,6 +44,19 @@ export default function Navbar() {
     }, 250); // must match your CSS animation duration
   }
 
+  // close modal on ESCAPE button press
+  useEffect(() => {
+    function handleEscClose(e) {
+      if (e.key === "Escape") {
+        if (openSettingModel) handleCloseSettingModal();
+      }
+    }
+    window.addEventListener("keydown", handleEscClose);
+    return () => {
+      window.removeEventListener("keydown", handleEscClose);
+    };
+  }, [openSettingModel]);
+
   return (
     <>
       <div className="navbar-container">

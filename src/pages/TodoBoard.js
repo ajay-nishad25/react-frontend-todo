@@ -291,6 +291,23 @@ export default function TodoBoard() {
     setPage(1);
   }
 
+  // close modal on ESCAPE button press
+  useEffect(() => {
+    function handleEscClose(e) {
+      if (e.key === "Escape") {
+        if (openCreateTodoModel) handleCloseModal();
+        if (openUpdateTodoModel) handleCloseUpdateModal();
+        if (openDeleteConfirm) handleCloseDeleteModal();
+      }
+    }
+
+    window.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscClose);
+    };
+  }, [openCreateTodoModel, openUpdateTodoModel, openDeleteConfirm]);
+
   return (
     <div className="page-layout">
       <div className="page-layout-inner-container">

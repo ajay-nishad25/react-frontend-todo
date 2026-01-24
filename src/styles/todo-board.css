@@ -108,7 +108,9 @@
 
 /* MODAL */
 .create-task-modal {
-    width: 520px;
+    /* width: 520px; */
+    width: 820px;
+    min-height: 540px;
     background: var(--delete-model-bg);
     border-radius: 12px;
     padding: 15px;
@@ -150,7 +152,7 @@
 
 /* DESCRIPTION */
 .modal-description {
-    min-height: 200px;
+    min-height: 435px;
     resize: none;
     padding: 12px 0px 0px 0px;
     font-size: 14px;
@@ -168,7 +170,7 @@
 /* 🔥 OPEN ANIMATION */
 /* OPEN ANIMATION */
 .animate-open-create-model {
-    animation: modalFadeIn 0.25s ease-out forwards;
+    animation: modalFadeIn 0.17s ease-out forwards;
 }
 
 @keyframes modalFadeIn {
@@ -185,7 +187,7 @@
 
 /* CLOSE ANIMATION */
 .animate-close-create-model {
-    animation: modalFadeOut 0.25s ease-in forwards;
+    animation: modalFadeOut 0.17s ease-in forwards;
 }
 
 @keyframes modalFadeOut {
