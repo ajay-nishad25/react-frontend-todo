@@ -74,7 +74,7 @@
     gap: 8px;
     padding: 10px 14px;
     background: linear-gradient(135deg, #6a8dff, #5a6cff);
-    color: #ffffff;
+    color: var(--text-primary);
     border: none;
     font-size: 14px;
     cursor: pointer;
@@ -147,6 +147,7 @@
 
 /* SAVE BUTTON */
 .save-btn {
+    color: var(--text-primary);
     border-radius: 12px;
 }
 
