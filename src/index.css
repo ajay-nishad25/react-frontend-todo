@@ -31,6 +31,7 @@
   --settings-right-panel: #ffffff;
   --settings-menu-item-hover: #e5edff;
   --settings-menu-item-active: #dbe7ff;
+  --theme-button-font-color: #ffffff;
 }
 
 /* =====================
@@ -69,6 +70,7 @@
   --settings-right-panel: #212427ea;
   --settings-menu-item-hover: #383838;
   --settings-menu-item-active: #262f44a6;
+  --theme-button-font-color: #d7d7d7;
 }
 
 
