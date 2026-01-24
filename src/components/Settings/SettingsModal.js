@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import "styles/settings.css";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/actions/authAction";
@@ -16,6 +16,18 @@ export default function SettingsModal({ isClosing, onClose }) {
 
   const [activeTab, setActiveTab] = useState("profile");
   const [theme, setThemeState] = useState(getTheme());
+
+  const [resetFormData, setResetFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const [resetFormError, setResetFormError] = useState({
+    currentPassword: { status: false, message: "" },
+    newPassword: { status: false, message: "" },
+    confirmPassword: { status: false, message: "" },
+  });
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { user_name, email } = userData;
@@ -36,6 +48,70 @@ export default function SettingsModal({ isClosing, onClose }) {
     const newTheme = theme === "light" ? "dark" : "light";
     setThemeState(newTheme);
     setTheme(newTheme);
+  }
+
+  function handleResetInputChange(e) {
+    const { name, value } = e.target;
+
+    setResetFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setResetFormError((prev) => ({
+      ...prev,
+      [name]: { status: false, message: "" },
+    }));
+  }
+
+  function handleResetPassword() {
+    const { currentPassword, newPassword, confirmPassword } = resetFormData;
+
+    const isValidNewLength = newPassword.trim().length >= 8;
+    const isValidConfirmLength = confirmPassword.trim().length >= 8;
+    const isMatch = newPassword.trim() === confirmPassword.trim();
+    const isDifferentFromCurrent =
+      currentPassword.trim() !== newPassword.trim();
+
+    const errors = {
+      currentPassword: {
+        status: !currentPassword.trim(),
+        message: !currentPassword.trim() ? "Please enter current password" : "",
+      },
+      newPassword: {
+        status:
+          !newPassword.trim() || !isValidNewLength || !isDifferentFromCurrent,
+        message: !newPassword.trim()
+          ? "Please enter new password"
+          : !isValidNewLength
+            ? "Password must be at least 8 characters"
+            : !isDifferentFromCurrent
+              ? "New password must be different from current password"
+              : "",
+      },
+      confirmPassword: {
+        status: !confirmPassword.trim() || !isValidConfirmLength || !isMatch,
+        message: !confirmPassword.trim()
+          ? "Please confirm your password"
+          : !isValidConfirmLength
+            ? "Confirm password must be at least 8 characters"
+            : !isMatch
+              ? "Confirm password does not match"
+              : "",
+      },
+    };
+
+    setResetFormError(errors);
+
+    const isAnyInvalid =
+      errors.currentPassword.status ||
+      errors.newPassword.status ||
+      errors.confirmPassword.status;
+
+    if (isAnyInvalid) return;
+
+    // ✅ Call API here
+    console.log("Reset password payload:", resetFormData);
   }
 
   return (
@@ -173,32 +249,83 @@ export default function SettingsModal({ isClosing, onClose }) {
                       <label className="content-item-title">
                         Current Password
                       </label>
-                      <input
-                        type="password"
-                        placeholder="Enter current password"
-                        className="security-input"
-                      />
+                      <div className="div-flex-column">
+                        <input
+                          type="password"
+                          name="currentPassword"
+                          placeholder="Enter current password"
+                          value={resetFormData.currentPassword}
+                          onChange={handleResetInputChange}
+                          className="security-input"
+                        />
+                        <div className="error-slot">
+                          <span
+                            className={`input-error-message ${
+                              resetFormError.currentPassword.status
+                                ? "visible"
+                                : ""
+                            }`}
+                          >
+                            {resetFormError.currentPassword.message}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     <div className="div-flex-column security-row">
                       <label className="content-item-title">New Password</label>
-                      <input
-                        type="password"
-                        placeholder="Enter new password"
-                        className="security-input"
-                      />
+                      <div className="div-flex-column">
+                        <input
+                          type="password"
+                          name="newPassword"
+                          placeholder="Enter new password"
+                          value={resetFormData.newPassword}
+                          onChange={handleResetInputChange}
+                          className="security-input"
+                        />
+                        <div className="error-slot">
+                          <span
+                            className={`input-error-message ${
+                              resetFormError.newPassword.status ? "visible" : ""
+                            }`}
+                          >
+                            {resetFormError.newPassword.message}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     <div className="div-flex-column security-row">
                       <label className="content-item-title">
                         Confirm Password
                       </label>
-                      <input
-                        type="password"
-                        placeholder="Confirm new password"
-                        className="security-input"
-                      />
+                      <div className="div-flex-column">
+                        <input
+                          type="password"
+                          name="confirmPassword"
+                          placeholder="Confirm new password"
+                          value={resetFormData.confirmPassword}
+                          onChange={handleResetInputChange}
+                          className="security-input"
+                        />
+                        <div className="error-slot">
+                          <span
+                            className={`input-error-message ${
+                              resetFormError.confirmPassword.status
+                                ? "visible"
+                                : ""
+                            }`}
+                          >
+                            {resetFormError.confirmPassword.message}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                     <div className="div-flex-row-w100 div-flex-end padding-v5">
-                      <button className="theme-btn">Reset Password</button>
+                      <button
+                        className="theme-btn"
+                        onClick={handleResetPassword}
+                      >
+                        Reset Password
+                      </button>
                     </div>
                   </div>
                 </div>
