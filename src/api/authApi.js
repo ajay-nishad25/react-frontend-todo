@@ -50,3 +50,14 @@ export function logoutApi() {
       return Promise.reject(error?.response?.data?.error);
     });
 }
+
+export function resetPasswordApi(resetPasswordPayload) {
+  return api
+    .post("/reset-password/", resetPasswordPayload)
+    .then((res) => {
+      return Promise.resolve(res?.data?.message);
+    })
+    .catch((error) => {
+      return Promise.reject(error?.response?.data?.error);
+    });
+}

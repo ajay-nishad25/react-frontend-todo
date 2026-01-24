@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "styles/settings.css";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "../../redux/actions/authAction";
+import { logoutUser, resetPassword } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from "assets/icons/close-icon.svg";
 import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
@@ -27,6 +27,11 @@ export default function SettingsModal({ isClosing, onClose }) {
     currentPassword: { status: false, message: "" },
     newPassword: { status: false, message: "" },
     confirmPassword: { status: false, message: "" },
+  });
+
+  const [resetResponse, setResetResponse] = useState({
+    type: null,
+    message: "",
   });
 
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
@@ -64,7 +69,32 @@ export default function SettingsModal({ isClosing, onClose }) {
     }));
   }
 
+  function handleTabToogle(tab) {
+    if (tab !== "security") {
+      setResetFormData({
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+      setResetFormError({
+        currentPassword: { status: false, message: "" },
+        newPassword: { status: false, message: "" },
+        confirmPassword: { status: false, message: "" },
+      });
+      setResetResponse({
+        type: null,
+        message: "",
+      });
+    }
+    setActiveTab(tab);
+  }
+
   function handleResetPassword() {
+    setResetResponse({
+      type: null,
+      message: "",
+    });
+
     const { currentPassword, newPassword, confirmPassword } = resetFormData;
 
     const isValidNewLength = newPassword.trim().length >= 8;
@@ -110,8 +140,30 @@ export default function SettingsModal({ isClosing, onClose }) {
 
     if (isAnyInvalid) return;
 
-    // ✅ Call API here
-    console.log("Reset password payload:", resetFormData);
+    const resetPasswordPayload = {
+      current_password: currentPassword,
+      new_password: newPassword,
+      confirm_password: confirmPassword,
+    };
+
+    dispatch(resetPassword(resetPasswordPayload))
+      .then((res) => {
+        setResetResponse({
+          type: "success",
+          message: res || "Password reset successfully",
+        });
+        setResetFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+      })
+      .catch((err) => {
+        setResetResponse({
+          type: "error",
+          message: err || "Failed to reset password. Please try again.",
+        });
+      });
   }
 
   return (
@@ -134,7 +186,7 @@ export default function SettingsModal({ isClosing, onClose }) {
                   className={`settings-menu-item ${
                     activeTab === "profile" ? "active" : ""
                   }`}
-                  onClick={() => setActiveTab("profile")}
+                  onClick={() => handleTabToogle("profile")}
                 >
                   <div className="div-flex-row div-align-center cg-10">
                     <ProfileIcon />
@@ -146,7 +198,7 @@ export default function SettingsModal({ isClosing, onClose }) {
                   className={`settings-menu-item ${
                     activeTab === "appearance" ? "active" : ""
                   }`}
-                  onClick={() => setActiveTab("appearance")}
+                  onClick={() => handleTabToogle("appearance")}
                 >
                   <div className="div-flex-row div-align-center cg-10">
                     <AppearanceIcon />
@@ -158,7 +210,7 @@ export default function SettingsModal({ isClosing, onClose }) {
                   className={`settings-menu-item ${
                     activeTab === "security" ? "active" : ""
                   }`}
-                  onClick={() => setActiveTab("security")}
+                  onClick={() => handleTabToogle("security")}
                 >
                   <div className="div-flex-row div-align-center cg-10">
                     <SecurityIcon />
@@ -239,12 +291,11 @@ export default function SettingsModal({ isClosing, onClose }) {
                 </div>
               )}
               {activeTab === "security" && (
-                <div className="div-flex-column rg-10 padding-v5">
-                  <span className="content-item-title">
-                    Change your account password to keep your account secure.
-                  </span>
-
+                <div className="div-flex-column-h100 div-space-between rg-10 padding-v5">
                   <div className="div-flex-column rg-10">
+                    <span className="content-item-title">
+                      Change your account password to keep your account secure.
+                    </span>
                     <div className="div-flex-column security-row">
                       <label className="content-item-title">
                         Current Password
@@ -327,6 +378,36 @@ export default function SettingsModal({ isClosing, onClose }) {
                         Reset Password
                       </button>
                     </div>
+                  </div>
+
+                  <div>
+                    {resetResponse.type && (
+                      <div
+                        className={`reset-alert ${
+                          resetResponse.type === "success"
+                            ? "reset-alert-success"
+                            : "reset-alert-error"
+                        }`}
+                      >
+                        <div className="div-flex-row div-align-center cg-10">
+                          <span className="reset-alert-icon">
+                            {resetResponse.type === "success" ? "✔" : "⚠"}
+                          </span>
+                          <span className="reset-alert-text">
+                            {resetResponse.message}
+                          </span>
+                        </div>
+
+                        <button
+                          className="reset-alert-dismiss"
+                          onClick={() =>
+                            setResetResponse({ type: null, message: "" })
+                          }
+                        >
+                          Dismiss
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
