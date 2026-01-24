@@ -65,7 +65,6 @@
     display: flex;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
 }
 
 .save-btn,

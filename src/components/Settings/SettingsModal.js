@@ -49,7 +49,7 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
         <div className="settings-body">
           <div className="settings-left-panel div-flex-column div-space-between">
             <div className="div-flex-column">
-              <div className="settings-header">
+              <div className="settings-header div-flex-row div-align-center div-space-between">
                 <span className="settings-main-title">Settings</span>
               </div>
 
@@ -100,8 +100,8 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
             </div>
           </div>
 
-          <div className="settings-right-panel">
-            <div className="settings-tab-header">
+          <div className="settings-right-panel div-flex-column">
+            <div className="settings-tab-header div-flex-row div-align-center div-space-between">
               <span className="settings-main-title">
                 {tabTitleMap[activeTab]}
               </span>
@@ -110,24 +110,24 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
 
             <div className="settings-tab-content">
               {activeTab === "profile" && (
-                <div className="">
-                  <p className="appearance-title">
+                <div className="div-flex-column rg-10 padding-v5">
+                  <span className="content-item-title">
                     Manage your personal information associated with your
                     account.
-                  </p>
+                  </span>
                   <div className="div-flex-column rg-10">
-                    <div className="appearance-row">
-                      <div className="appearance-text">
-                        <span className="appearance-title">Username</span>
-                        <span className="appearance-subtitle">
+                    <div className="div-flex-row div-space-between div-align-center content-item-row">
+                      <div className="content-item-text div-flex-column">
+                        <span className="content-item-title">Username</span>
+                        <span className="content-item-subtitle">
                           {user_name || "—"}
                         </span>
                       </div>
                     </div>
-                    <div className="appearance-row">
-                      <div className="appearance-text">
-                        <span className="appearance-title">Email</span>
-                        <span className="appearance-subtitle">
+                    <div className="div-flex-row div-space-between div-align-center content-item-row">
+                      <div className="content-item-text div-flex-column">
+                        <span className="content-item-title">Email</span>
+                        <span className="content-item-subtitle">
                           {email || "—"}
                         </span>
                       </div>
@@ -139,15 +139,15 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
                 </div>
               )}
               {activeTab === "appearance" && (
-                <div className="appearance-section">
-                  <p className="appearance-title">
+                <div className="div-flex-column rg-10 padding-v5">
+                  <span className="content-item-title">
                     Customize how the application looks on your device.
-                  </p>
+                  </span>
 
-                  <div className="appearance-row">
-                    <div className="appearance-text">
-                      <span className="appearance-title">Theme</span>
-                      <span className="appearance-subtitle">
+                  <div className="div-flex-row div-space-between div-align-center content-item-row">
+                    <div className="content-item-text div-flex-column">
+                      <span className="content-item-title">Theme</span>
+                      <span className="content-item-subtitle">
                         Switch between light and dark mode
                       </span>
                     </div>
@@ -163,6 +163,47 @@ export default function SettingsModal({ isOpen, isClosing, onClose }) {
                       />
                       <span className="slider" />
                     </label>
+                  </div>
+                </div>
+              )}
+              {activeTab === "security" && (
+                <div className="div-flex-column rg-10 padding-v5">
+                  <span className="content-item-title">
+                    Change your account password to keep your account secure.
+                  </span>
+
+                  <div className="div-flex-column rg-10">
+                    <div className="div-flex-column security-row">
+                      <label className="content-item-title">
+                        Current Password
+                      </label>
+                      <input
+                        type="password"
+                        placeholder="Enter current password"
+                        className="security-input"
+                      />
+                    </div>
+                    <div className="div-flex-column security-row">
+                      <label className="content-item-title">New Password</label>
+                      <input
+                        type="password"
+                        placeholder="Enter new password"
+                        className="security-input"
+                      />
+                    </div>
+                    <div className="div-flex-column security-row">
+                      <label className="content-item-title">
+                        Confirm Password
+                      </label>
+                      <input
+                        type="password"
+                        placeholder="Confirm new password"
+                        className="security-input"
+                      />
+                    </div>
+                    <div className="div-flex-row-w100 div-flex-end padding-v5">
+                      <button className="theme-btn">Reset Password</button>
+                    </div>
                   </div>
                 </div>
               )}
