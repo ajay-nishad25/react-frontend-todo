@@ -577,11 +577,11 @@ export default function TodoBoard() {
           >
             <h3 className="confirm-title">Delete Todo</h3>
 
-            <p className="confirm-text">
+            <span className="confirm-text">
               Are you sure you want to delete this todo?
               <br />
               This action cannot be undone.
-            </p>
+            </span>
 
             <div className="confirm-actions">
               <button className="cancel-btn" onClick={handleCloseDeleteModal}>
