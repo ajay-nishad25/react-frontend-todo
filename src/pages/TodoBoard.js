@@ -61,6 +61,8 @@ export default function TodoBoard() {
     localStorage.getItem("todo_order") || null,
   );
 
+  const [viewMode, setViewMode] = useState("card");
+
   useEffect(() => {
     function handleClickOutside(e) {
       if (filterRef.current && !filterRef.current.contains(e.target)) {
@@ -405,6 +407,21 @@ export default function TodoBoard() {
                 </div>
               )}
             </div>
+            {/* Card and List toogle must be on icon so change this code */}
+            <div className="view-toggle">
+              <button
+                className={`view-btn ${viewMode === "card" ? "active" : ""}`}
+                onClick={() => setViewMode("card")}
+              >
+                Card
+              </button>
+              <button
+                className={`view-btn ${viewMode === "list" ? "active" : ""}`}
+                onClick={() => setViewMode("list")}
+              >
+                List
+              </button>
+            </div>
 
             <div className="new-task-btn">
               <button className="primary-btn" onClick={handleOpenCreateModel}>
@@ -414,7 +431,7 @@ export default function TodoBoard() {
             </div>
           </div>
         </div>
-        {todoDataList?.length > 0 && (
+        {todoDataList?.length > 0 && viewMode === "card" && (
           <div className="task-grid">
             {todoDataList.map((task) => (
               <div
@@ -457,6 +474,51 @@ export default function TodoBoard() {
             ))}
           </div>
         )}
+        {todoDataList?.length > 0 && viewMode === "list" && (
+          <div className="task-list">
+            {todoDataList.map((task) => (
+              <div
+                key={task.id}
+                className="task-list-row cursor-pointer"
+                onClick={() => openTooUpdateModel(task)}
+              >
+                <div className="task-list-main">
+                  <div className="task-title">{task.title}</div>
+                  <div className="task-desc">
+                    {task.description?.trim() ? task.description : "N/A"}
+                  </div>
+                </div>
+
+                <div className="task-list-meta">
+                  <span
+                    className={`task-status ${
+                      task.is_completed ? "completed" : "pending"
+                    }`}
+                  >
+                    {task.is_completed ? "Completed" : "Pending"}
+                  </span>
+
+                  <span className="task-date">
+                    {new Date(task.created_at).toLocaleDateString()}
+                  </span>
+
+                  <button
+                    className="delete-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setTodoToDelete(task.id);
+                      setIsDeleteClosing(false);
+                      setOpenDeleteConfirm(true);
+                    }}
+                  >
+                    <DeleteIcon />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {todoData?.results?.length === 0 && (
           <EmptyState handleOpenCreateModel={handleOpenCreateModel} />
         )}
