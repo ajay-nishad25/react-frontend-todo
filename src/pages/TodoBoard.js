@@ -3,6 +3,9 @@ import "styles/todo-board.css";
 import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
+import { ReactComponent as CardViewIcon } from "assets/icons/card-view-icon.svg";
+import { ReactComponent as ListViewIcon } from "assets/icons/list-view-icon.svg";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   createTodo,
@@ -54,14 +57,16 @@ export default function TodoBoard() {
   const filterRef = useRef(null);
 
   const [statusFilter, setStatusFilter] = useState(
-    localStorage.getItem("todo_status") || null,
+    localStorage.getItem("todoStatus") || null,
   );
 
   const [orderFilter, setOrderFilter] = useState(
-    localStorage.getItem("todo_order") || null,
+    localStorage.getItem("todoOrder") || null,
   );
 
-  const [viewMode, setViewMode] = useState("card");
+  const [viewMode, setViewMode] = useState(
+    localStorage.getItem("todoViewMode") || "card",
+  );
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -270,11 +275,11 @@ export default function TodoBoard() {
     if (statusFilter === value) {
       // toggle OFF
       setStatusFilter(null);
-      localStorage.removeItem("todo_status");
+      localStorage.removeItem("todoStatus");
     } else {
       // toggle ON
       setStatusFilter(value);
-      localStorage.setItem("todo_status", value);
+      localStorage.setItem("todoStatus", value);
     }
 
     setPage(1);
@@ -284,11 +289,11 @@ export default function TodoBoard() {
     if (orderFilter === value) {
       // toggle OFF
       setOrderFilter(null);
-      localStorage.removeItem("todo_order");
+      localStorage.removeItem("todoOrder");
     } else {
       // toggle ON
       setOrderFilter(value);
-      localStorage.setItem("todo_order", value);
+      localStorage.setItem("todoOrder", value);
     }
     setPage(1);
   }
@@ -309,6 +314,14 @@ export default function TodoBoard() {
       window.removeEventListener("keydown", handleEscClose);
     };
   }, [openCreateTodoModel, openUpdateTodoModel, openDeleteConfirm]);
+
+  function toggleViewMode() {
+    setViewMode((prev) => {
+      const next = prev === "card" ? "list" : "card";
+      localStorage.setItem("todoViewMode", next);
+      return next;
+    });
+  }
 
   return (
     <div className="page-layout">
@@ -407,19 +420,9 @@ export default function TodoBoard() {
                 </div>
               )}
             </div>
-            {/* Card and List toogle must be on icon so change this code */}
             <div className="view-toggle">
-              <button
-                className={`view-btn ${viewMode === "card" ? "active" : ""}`}
-                onClick={() => setViewMode("card")}
-              >
-                Card
-              </button>
-              <button
-                className={`view-btn ${viewMode === "list" ? "active" : ""}`}
-                onClick={() => setViewMode("list")}
-              >
-                List
+              <button className="view-btn" onClick={toggleViewMode}>
+                {viewMode === "card" ? <ListViewIcon /> : <CardViewIcon />}
               </button>
             </div>
 
