@@ -386,6 +386,44 @@
     gap: 16px;
 }
 
+.view-container {
+    position: relative;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.view-container.card {
+    animation: fadeInCard 0.25s ease forwards;
+}
+
+.view-container.list {
+    animation: fadeInList 0.25s ease forwards;
+}
+
+@keyframes fadeInCard {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeInList {
+    from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
 
 
 .task-status {
