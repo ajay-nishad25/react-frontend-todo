@@ -14,6 +14,9 @@ import {
   updateTodo,
 } from "../redux/actions/todoAction";
 import EmptyState from "components/EmptyState";
+import CreateTodo from "components/CreateTodo/CreateTodo";
+import UpdateTodo from "components/UpdateTodo/UpdateTodo";
+import DeleteConfirmationModel from "components/UpdateTodo/DeleteConfirmationModel";
 
 export default function TodoBoard() {
   const dispatch = useDispatch();
@@ -529,120 +532,33 @@ export default function TodoBoard() {
       </div>
       {/* CREATE TASK MODEL */}
       {openCreateTodoModel && (
-        <div className="modal-overlay" onClick={handleCloseModal}>
-          <div
-            className={`create-task-modal ${
-              isClosing
-                ? "animate-close-create-model"
-                : "animate-open-create-model"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-header">
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={formData.title}
-                onChange={handleOnChange}
-                className={`modal-title-input ${
-                  formInputError.title.status ? "input-error" : ""
-                }`}
-              />
-              <button className="save-btn" onClick={handleCreateTodo}>
-                Save
-              </button>
-            </div>
-
-            <textarea
-              name="description"
-              placeholder="Write task description..."
-              value={formData.description}
-              onChange={handleOnChange}
-              className="modal-description"
-            />
-          </div>
-        </div>
+        <CreateTodo
+          formData={formData}
+          handleOnChange={handleOnChange}
+          formInputError={formInputError}
+          handleCreateTodo={handleCreateTodo}
+          handleCloseModal={handleCloseModal}
+          isClosing={isClosing}
+        />
       )}
       {/* DELETE CONFIRMATION MODAL */}
       {openDeleteConfirm && (
-        <div className="modal-overlay" onClick={handleCloseDeleteModal}>
-          <div
-            className={`confirm-modal ${
-              isDeleteClosing
-                ? "animate-close-create-model"
-                : "animate-open-create-model"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="confirm-title">Delete Todo</h3>
-
-            <span className="confirm-text">
-              Are you sure you want to delete this todo?
-              <br />
-              This action cannot be undone.
-            </span>
-
-            <div className="confirm-actions">
-              <button className="cancel-btn" onClick={handleCloseDeleteModal}>
-                Cancel
-              </button>
-
-              <button className="danger-btn" onClick={handleConfirmDelete}>
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+        <DeleteConfirmationModel
+          handleCloseDeleteModal={handleCloseDeleteModal}
+          isDeleteClosing={isDeleteClosing}
+          handleConfirmDelete={handleConfirmDelete}
+        />
       )}
 
       {/* UPDATE TODO MODAL */}
       {openUpdateTodoModel && (
-        <div className="modal-overlay" onClick={handleCloseUpdateModal}>
-          <div
-            className={`create-task-modal ${
-              isUpdateClosing
-                ? "animate-close-create-model"
-                : "animate-open-create-model"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-header">
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                value={updateFormData.title}
-                onChange={handleUpdateChange}
-                className={`modal-title-input ${
-                  updateFormData.title === "" ? "input-error" : ""
-                }`}
-              />
-
-              <button className="save-btn" onClick={handleUpdateTodo}>
-                Update
-              </button>
-            </div>
-
-            <textarea
-              name="description"
-              placeholder="Write task description..."
-              value={updateFormData.description}
-              onChange={handleUpdateChange}
-              className="modal-description"
-            />
-
-            <label className="div-flex-row div-align-center mark-completed-text">
-              <input
-                type="checkbox"
-                name="is_completed"
-                checked={updateFormData.is_completed}
-                onChange={handleUpdateChange}
-              />
-              Mark as completed
-            </label>
-          </div>
-        </div>
+        <UpdateTodo
+          updateFormData={updateFormData}
+          handleUpdateChange={handleUpdateChange}
+          handleUpdateTodo={handleUpdateTodo}
+          handleCloseUpdateModal={handleCloseUpdateModal}
+          isUpdateClosing={isUpdateClosing}
+        />
       )}
     </div>
   );
