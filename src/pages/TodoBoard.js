@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "styles/todo-board.css";
 import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
-import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
 import { ReactComponent as CardViewIcon } from "assets/icons/card-view-icon.svg";
 import { ReactComponent as ListViewIcon } from "assets/icons/list-view-icon.svg";
 
@@ -17,6 +16,7 @@ import EmptyState from "components/EmptyState";
 import CreateTodo from "components/CreateTodo/CreateTodo";
 import UpdateTodo from "components/UpdateTodo/UpdateTodo";
 import DeleteConfirmationModel from "components/UpdateTodo/DeleteConfirmationModel";
+import TodoList from "components/TodoList/TodoList";
 
 export default function TodoBoard() {
   const dispatch = useDispatch();
@@ -437,95 +437,14 @@ export default function TodoBoard() {
             </div>
           </div>
         </div>
-        <div className={`view-container ${viewMode}`}>
-          {viewMode === "card" && (
-            <div className="task-grid">
-              {todoDataList?.map((task) => (
-                <div
-                  className="task-card cursor-pointer"
-                  key={task.id}
-                  onClick={() => openTooUpdateModel(task)}
-                >
-                  <div className="task-card-header">
-                    <h3 className="task-title">{task.title}</h3>
-                    <button
-                      className="delete-btn"
-                      title="Delete"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTodoToDelete(task.id);
-                        setIsDeleteClosing(false);
-                        setOpenDeleteConfirm(true);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                  <p className="task-desc">
-                    {task.description?.trim() ? task.description : "N/A"}
-                  </p>
-                  <div className="task-card-footer">
-                    <span
-                      className={`task-status ${
-                        task.is_completed ? "completed" : "pending"
-                      }`}
-                    >
-                      {task.is_completed ? "Completed" : "Pending"}
-                    </span>
-
-                    <span className="task-date">
-                      {new Date(task.created_at).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          {viewMode === "list" && (
-            <div className="task-list">
-              {todoDataList?.map((task) => (
-                <div
-                  key={task.id}
-                  className="task-list-row cursor-pointer"
-                  onClick={() => openTooUpdateModel(task)}
-                >
-                  <div className="task-list-main">
-                    <div className="task-title">{task.title}</div>
-                    <div className="task-desc">
-                      {task.description?.trim() ? task.description : "N/A"}
-                    </div>
-                  </div>
-
-                  <div className="task-list-meta">
-                    <span
-                      className={`task-status ${
-                        task.is_completed ? "completed" : "pending"
-                      }`}
-                    >
-                      {task.is_completed ? "Completed" : "Pending"}
-                    </span>
-
-                    <span className="task-date">
-                      {new Date(task.created_at).toLocaleDateString()}
-                    </span>
-
-                    <button
-                      className="delete-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTodoToDelete(task.id);
-                        setIsDeleteClosing(false);
-                        setOpenDeleteConfirm(true);
-                      }}
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <TodoList
+          viewMode={viewMode}
+          todoDataList={todoDataList}
+          openTooUpdateModel={openTooUpdateModel}
+          setTodoToDelete={setTodoToDelete}
+          setIsDeleteClosing={setIsDeleteClosing}
+          setOpenDeleteConfirm={setOpenDeleteConfirm}
+        />
         {todoDataList?.length === 0 && (
           <EmptyState handleOpenCreateModel={handleOpenCreateModel} />
         )}
