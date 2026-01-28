@@ -28,6 +28,11 @@ export default function TodoBoard() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    statusId: "",
+    tagId: "",
+    archived: null,
+    pinned: null,
+    dueDate: "",
   });
 
   const [formInputError, setFormInputError] = useState({
@@ -160,6 +165,18 @@ export default function TodoBoard() {
       });
       return;
     }
+
+    const createPayload = {
+      title: formData.title,
+      description: formData.description,
+      status_id: formData.statusId,
+      tag_id: formData.tagId,
+      archived: formData.archived,
+      pinned: formData.pinned,
+      dueDate: formData.dueDate,
+    };
+
+    console.log(createPayload);
 
     // call create api
     dispatch(createTodo(formData)).then(() => {

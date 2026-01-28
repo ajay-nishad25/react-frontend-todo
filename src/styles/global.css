@@ -184,6 +184,11 @@
 }
 
 
+.icon-size-18 {
+    height: 18px;
+    width: 18px;
+}
+
 
 .cursor-pointer {
     cursor: pointer;
