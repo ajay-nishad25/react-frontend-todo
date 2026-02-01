@@ -13,7 +13,7 @@
     width: 390px;
     padding: 32px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
@@ -163,7 +163,7 @@
 .error-modal {
     width: 320px;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     text-align: center;
