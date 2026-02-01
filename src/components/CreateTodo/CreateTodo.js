@@ -102,7 +102,7 @@ export default function CreateTodo({
               }`}
             >
               <div>
-                <div className="drawer-title">Add Status</div>
+                <div className="drawer-title">Status</div>
                 <div className="chip-group">
                   <button
                     className={`task-status ${
@@ -158,20 +158,6 @@ export default function CreateTodo({
                     onClick={() => handleExtraDataInput("archived", false)}
                   >
                     Unarchive
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <div className="drawer-title">Pin</div>
-                <div className="div-flex-row-w100 cg-5">
-                  <button
-                    className={`task-status ${
-                      formData.pinned ? "active-pill" : ""
-                    }`}
-                    onClick={() => handleExtraDataInput("pinned", true)}
-                  >
-                    Pin
                   </button>
                 </div>
               </div>

@@ -5,36 +5,38 @@
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
 >
+  <g transform="translate(2, 0)">
     <path
-    d="M3 6H21"
-    stroke="red"
-    stroke-width="2"
-    stroke-linecap="round"
+      d="M3 6H21"
+      stroke="red"
+      stroke-width="2"
+      stroke-linecap="round"
     />
     <path
-    d="M8 6V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V6"
-    stroke="red"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+      d="M8 6V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V6"
+      stroke="red"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
     <path
-    d="M6 6L7 20C7 20.5523 7.44772 21 8 21H16C16.5523 21 17 20.5523 17 20L18 6"
-    stroke="red"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
+      d="M6 6L7 20C7 20.5523 7.44772 21 8 21H16C16.5523 21 17 20.5523 17 20L18 6"
+      stroke="red"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     />
     <path
-    d="M10 11V17"
-    stroke="red"
-    stroke-width="2"
-    stroke-linecap="round"
+      d="M10 11V17"
+      stroke="red"
+      stroke-width="2"
+      stroke-linecap="round"
     />
     <path
-    d="M14 11V17"
-    stroke="red"
-    stroke-width="2"
-    stroke-linecap="round"
+      d="M14 11V17"
+      stroke="red"
+      stroke-width="2"
+      stroke-linecap="round"
     />
+  </g>
 </svg>

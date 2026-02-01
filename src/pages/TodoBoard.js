@@ -28,10 +28,9 @@ export default function TodoBoard() {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    statusId: "",
+    status: "",
     tagId: "",
     archived: null,
-    pinned: null,
     dueDate: "",
   });
 
@@ -58,7 +57,10 @@ export default function TodoBoard() {
     todo_id: "",
     title: "",
     description: "",
-    is_completed: false,
+    status: "",
+    tagId: "",
+    archived: null,
+    dueDate: "",
   });
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -169,17 +171,24 @@ export default function TodoBoard() {
     const createPayload = {
       title: formData.title,
       description: formData.description,
-      status_id: formData.statusId,
-      tag_id: formData.tagId,
-      archived: formData.archived,
-      pinned: formData.pinned,
-      dueDate: formData.dueDate,
+      is_completed: formData.status === "completed" ? true : false,
     };
 
-    console.log(createPayload);
+    // Only add optional fields if they exist
+    if (formData.tagId) {
+      createPayload.tag_id = formData.tagId;
+    }
+
+    if (typeof formData.archived === "boolean") {
+      createPayload.is_archived = formData.archived;
+    }
+
+    if (formData.dueDate) {
+      createPayload.due_date = formData.dueDate;
+    }
 
     // call create api
-    dispatch(createTodo(formData)).then(() => {
+    dispatch(createTodo(createPayload)).then(() => {
       setFormData({
         title: "",
         description: "",
@@ -255,12 +264,25 @@ export default function TodoBoard() {
     });
   }
 
+  // TEMPORAY
+  const tagListData = [
+    { label: "Urgent", class: "tag-urgent", id: 1 },
+    { label: "Highest Priority", class: "tag-high", id: 2 },
+    { label: "Mid Priority", class: "tag-mid", id: 3 },
+    { label: "Low Priority", class: "tag-low", id: 4 },
+    { label: "Someday/Maybe", class: "tag-someday", id: 5 },
+  ];
+
   function openTooUpdateModel(todo) {
     setUpdateFormData({
       todo_id: todo.id,
       title: todo.title || "",
       description: todo.description || "",
-      is_completed: todo.is_completed || false,
+      status: todo.is_completed ? "completed" : "pending",
+      tagId:
+        tagListData?.filter((tag) => tag.label === todo.tag)[0]?.id || null,
+      archived: todo.is_archived || null,
+      dueDate: todo.due_date || "",
     });
 
     setIsUpdateClosing(false);
@@ -285,7 +307,27 @@ export default function TodoBoard() {
 
   function handleUpdateTodo() {
     if (!updateFormData.title.trim()) return;
-    dispatch(updateTodo(updateFormData)).then(() => {
+
+    const updatePayload = {
+      todo_id: updateFormData.todo_id,
+      title: updateFormData.title,
+      description: updateFormData.description,
+      is_completed: updateFormData.status === "completed" ? true : false,
+    };
+
+    if (updateFormData.tagId) {
+      updatePayload.tag_id = updateFormData.tagId;
+    }
+
+    if (typeof updateFormData.archived === "boolean") {
+      updatePayload.is_archived = updateFormData.archived;
+    }
+
+    if (updateFormData.dueDate) {
+      updatePayload.due_date = updateFormData.dueDate;
+    }
+
+    dispatch(updateTodo(updatePayload)).then(() => {
       handleCloseUpdateModal();
       dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
     });
