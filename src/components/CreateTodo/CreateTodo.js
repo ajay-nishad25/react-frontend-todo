@@ -90,7 +90,7 @@ export default function CreateTodo({
             />
             <div className="div-flex-row div-flex-end">
               <button className="save-btn" onClick={handleCreateTodo}>
-                Save
+                Create
               </button>
             </div>
           </div>
