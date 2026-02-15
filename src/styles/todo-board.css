@@ -223,38 +223,29 @@
 
 
 .tag-urgent {
-    /* background: #fee2e2;
-    color: #b91c1c;
-    border-color: #fecaca; */
-    background: #ffc1c1;
-    color: #f53d3d;
-    border-color: #fecaca;
+    background: #fecaca;
+    color: #7f1d1d;
 }
 
 .tag-high {
-    background: #ffe4e6;
-    color: #be123c;
-    border-color: #fecdd3;
+    background: #fed7aa;
+    color: #7c2d12;
 }
 
 .tag-mid {
-    background: #fef3c7;
-    color: #b45309;
-    border-color: #fde68a;
+    background: #c7d2fe;
+    color: #3730a3;
 }
 
 .tag-low {
-    background: #dcfce7;
-    color: #166534;
-    border-color: #bbf7d0;
+    background: #bfdbfe;
+    color: #1e3a8a;
 }
 
 .tag-someday {
-    background: #e0e7ff;
-    color: #3730a3;
-    border-color: #c7d2fe;
+    background: #e9d5ff;
+    color: #581c87;
 }
-
 
 .active-pill {
     background: var(--primary);

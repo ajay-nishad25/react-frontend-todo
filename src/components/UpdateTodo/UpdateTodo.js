@@ -107,7 +107,9 @@ export default function UpdateTodo({
                 <div className="chip-group">
                   <button
                     className={`task-status ${
-                      updateFormData.status === "pending" ? "active-pill" : ""
+                      updateFormData.status === "pending"
+                        ? "active-pill"
+                        : "pending"
                     }`}
                     onClick={() => handleExtraDataInput("status", "pending")}
                   >
@@ -115,7 +117,9 @@ export default function UpdateTodo({
                   </button>
                   <button
                     className={`task-status ${
-                      updateFormData.status === "completed" ? "active-pill" : ""
+                      updateFormData.status === "completed"
+                        ? "active-pill"
+                        : "completed"
                     }`}
                     onClick={() => handleExtraDataInput("status", "completed")}
                   >

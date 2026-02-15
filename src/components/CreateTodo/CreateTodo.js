@@ -106,7 +106,7 @@ export default function CreateTodo({
                 <div className="chip-group">
                   <button
                     className={`task-status ${
-                      formData.status === "pending" ? "active-pill" : ""
+                      formData.status === "pending" ? "active-pill" : "pending"
                     }`}
                     onClick={() => handleExtraDataInput("status", "pending")}
                   >
@@ -114,7 +114,9 @@ export default function CreateTodo({
                   </button>
                   <button
                     className={`task-status ${
-                      formData.status === "completed" ? "active-pill" : ""
+                      formData.status === "completed"
+                        ? "active-pill"
+                        : "completed"
                     }`}
                     onClick={() => handleExtraDataInput("status", "completed")}
                   >
