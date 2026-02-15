@@ -1,5 +1,6 @@
 import React from "react";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
+import { ReactComponent as ArchiveIcon } from "assets/icons/archive-icon.svg";
 
 export default function TodoList({
   viewMode,
@@ -50,7 +51,7 @@ export default function TodoList({
                   {task.description?.trim() ? task.description : "N/A"}
                 </p>
                 <div className="task-card-footer">
-                  <div className="div-flex-row cg-5">
+                  <div className="div-flex-row div-align-center cg-5">
                     <span
                       className={`task-status ${
                         task.is_completed ? "completed" : "pending"
@@ -61,6 +62,11 @@ export default function TodoList({
                     {task.tag && (
                       <span className={`task-status ${tagClass || ""}`}>
                         {task.tag}
+                      </span>
+                    )}
+                    {task?.is_archived && (
+                      <span className="div-align-center task-status task-archive">
+                        <ArchiveIcon className="icon-size-18" />
                       </span>
                     )}
                   </div>
@@ -108,6 +114,11 @@ export default function TodoList({
                     {task.tag && (
                       <span className={`task-status ${tagClass || ""}`}>
                         {task.tag}
+                      </span>
+                    )}
+                    {task?.is_archived && (
+                      <span className="div-align-center task-status task-archive">
+                        <ArchiveIcon className="icon-size-18" />
                       </span>
                     )}
                     {task?.due_date && (
