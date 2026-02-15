@@ -42,8 +42,7 @@ export function logoutApi() {
       localStorage.removeItem("userData");
       localStorage.removeItem("selectedTheme");
       document.documentElement.setAttribute("data-theme", "light");
-      localStorage.removeItem("todoOrder");
-      localStorage.removeItem("todoStatus");
+      localStorage.removeItem("todoFilters");
       localStorage.removeItem("todoViewMode");
       return Promise.resolve(res?.data?.message);
     })

@@ -219,3 +219,12 @@
 .theme-btn:disabled:hover {
     background: var(--primary);
 }
+
+.common-btn-none {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
