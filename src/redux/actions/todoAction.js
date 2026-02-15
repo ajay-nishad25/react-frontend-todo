@@ -21,8 +21,25 @@ export const createTodo = (payload) => (dispatch) => {
 };
 
 export const getTodos =
-  (page, debouncedSearch, statusFilter, orderFilter) => (dispatch) => {
-    return getTodosApi(page, debouncedSearch, statusFilter, orderFilter)
+  (
+    page,
+    debouncedSearch,
+    statusFilter,
+    orderFilter,
+    tagFilter,
+    archiveFilter,
+    dueDateFilter,
+  ) =>
+  (dispatch) => {
+    return getTodosApi(
+      page,
+      debouncedSearch,
+      statusFilter,
+      orderFilter,
+      tagFilter,
+      archiveFilter,
+      dueDateFilter,
+    )
       .then((data) => {
         dispatch({
           type: GET_TODOS,

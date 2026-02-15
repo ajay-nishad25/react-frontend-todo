@@ -11,13 +11,24 @@ export function createTodoApi(payload) {
     });
 }
 
-export function getTodosApi(page, debouncedSearch, statusFilter, orderFilter) {
+export function getTodosApi(
+  page,
+  debouncedSearch,
+  statusFilter,
+  orderFilter,
+  tagFilter,
+  archiveFilter,
+  dueDateFilter,
+) {
   const params = {
     search: debouncedSearch,
     page: page,
+    is_archived: archiveFilter === "true" ? true : false,
   };
   if (statusFilter !== null) params.is_completed = statusFilter;
   if (orderFilter) params.sort_order = orderFilter;
+  if (tagFilter !== null) params.tag_id = tagFilter;
+  if (dueDateFilter !== "") params.due_date = dueDateFilter;
   return api
     .get("/get-todos/", { params })
     .then((res) => {

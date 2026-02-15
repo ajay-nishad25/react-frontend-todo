@@ -66,13 +66,25 @@ export default function TodoBoard() {
   const [openFilter, setOpenFilter] = useState(false);
   const filterRef = useRef(null);
 
-  const [statusFilter, setStatusFilter] = useState(
-    localStorage.getItem("todoStatus") || null,
-  );
+  const [filterFormData, setFilterFormData] = useState(() => {
+    const stored = localStorage.getItem("todoFilters");
+    if (!stored) {
+      return {
+        order: null,
+        status: null,
+        tag: null,
+        archive: null,
+        dueDate: "",
+      };
+    }
 
-  const [orderFilter, setOrderFilter] = useState(
-    localStorage.getItem("todoOrder") || null,
-  );
+    const parsed = JSON.parse(stored);
+
+    return {
+      ...parsed,
+      tag: parsed.tag ? Number(parsed.tag) : null,
+    };
+  });
 
   const [viewMode, setViewMode] = useState(
     localStorage.getItem("todoViewMode") || "card",
@@ -90,8 +102,32 @@ export default function TodoBoard() {
 
   useEffect(() => {
     if (page === "") return;
-    dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
-  }, [dispatch, debouncedSearch, page, statusFilter, orderFilter]);
+    dispatch(
+      getTodos(
+        page,
+        debouncedSearch,
+        filterFormData?.status,
+        filterFormData?.order,
+        filterFormData?.tag,
+        filterFormData?.archive,
+        filterFormData?.dueDate,
+      ),
+    );
+  }, [
+    dispatch,
+    debouncedSearch,
+    page,
+    filterFormData?.status,
+    filterFormData?.order,
+    filterFormData?.tag,
+    filterFormData?.archive,
+    filterFormData?.dueDate,
+  ]);
+
+  useEffect(() => {
+    localStorage.setItem("todoFilters", JSON.stringify(filterFormData));
+    setPage(1);
+  }, [filterFormData]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -107,6 +143,20 @@ export default function TodoBoard() {
   const todoDataList = todoData?.results;
   const currentPage = todoData?.current_page;
   const totalPages = todoData?.total_pages;
+
+  function handleFilterChange(key, value) {
+    setFilterFormData((prev) => ({
+      ...prev,
+      [key]: prev[key] === value ? null : value,
+    }));
+  }
+
+  function handleClearDueDate() {
+    setFilterFormData((prev) => ({
+      ...prev,
+      dueDate: "",
+    }));
+  }
 
   const handleSearchChange = (e) => {
     setSearchInput(e.target.value);
@@ -204,7 +254,17 @@ export default function TodoBoard() {
       });
       setSearchInput("");
       handleCloseModal();
-      dispatch(getTodos(1, debouncedSearch, statusFilter, orderFilter));
+      dispatch(
+        getTodos(
+          1,
+          debouncedSearch,
+          filterFormData?.status,
+          filterFormData?.order,
+          filterFormData?.tag,
+          filterFormData?.archive,
+          filterFormData?.dueDate,
+        ),
+      );
       setPage(1);
     });
   }
@@ -255,9 +315,18 @@ export default function TodoBoard() {
 
   function handleConfirmDelete() {
     if (!todoToDelete) return;
-
     dispatch(deleteTodo(todoToDelete)).then(() => {
-      dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
+      dispatch(
+        getTodos(
+          page,
+          debouncedSearch,
+          filterFormData?.status,
+          filterFormData?.order,
+          filterFormData?.tag,
+          filterFormData?.archive,
+          filterFormData?.dueDate,
+        ),
+      );
       // setPage(1);
       setOpenDeleteConfirm(false);
       setTodoToDelete(null);
@@ -329,35 +398,18 @@ export default function TodoBoard() {
 
     dispatch(updateTodo(updatePayload)).then(() => {
       handleCloseUpdateModal();
-      dispatch(getTodos(page, debouncedSearch, statusFilter, orderFilter));
+      dispatch(
+        getTodos(
+          page,
+          debouncedSearch,
+          filterFormData?.status,
+          filterFormData?.order,
+          filterFormData?.tag,
+          filterFormData?.archive,
+          filterFormData?.dueDate,
+        ),
+      );
     });
-  }
-
-  function handleStatusFilter(value) {
-    if (statusFilter === value) {
-      // toggle OFF
-      setStatusFilter(null);
-      localStorage.removeItem("todoStatus");
-    } else {
-      // toggle ON
-      setStatusFilter(value);
-      localStorage.setItem("todoStatus", value);
-    }
-
-    setPage(1);
-  }
-
-  function handleOrderFilter(value) {
-    if (orderFilter === value) {
-      // toggle OFF
-      setOrderFilter(null);
-      localStorage.removeItem("todoOrder");
-    } else {
-      // toggle ON
-      setOrderFilter(value);
-      localStorage.setItem("todoOrder", value);
-    }
-    setPage(1);
   }
 
   // close modal on ESCAPE button press
@@ -439,33 +491,12 @@ export default function TodoBoard() {
               {openFilter && (
                 <div className="filter-popover">
                   <div className="filter-section">
-                    <div className="filter-title">Sort by status</div>
-                    <label className="filter-option">
-                      <input
-                        type="radio"
-                        checked={statusFilter === "false"}
-                        onClick={() => handleStatusFilter("false")}
-                      />
-                      Pending
-                    </label>
-
-                    <label className="filter-option">
-                      <input
-                        type="radio"
-                        checked={statusFilter === "true"}
-                        onClick={() => handleStatusFilter("true")}
-                      />
-                      Completed
-                    </label>
-                  </div>
-                  <div className="filter-divider" />
-                  <div className="filter-section">
                     <div className="filter-title">Sort by order</div>
                     <label className="filter-option">
                       <input
                         type="radio"
-                        checked={orderFilter === "1"}
-                        onClick={() => handleOrderFilter("1")}
+                        checked={filterFormData.order === "1"}
+                        onClick={() => handleFilterChange("order", "1")}
                       />
                       Latest
                     </label>
@@ -473,10 +504,80 @@ export default function TodoBoard() {
                     <label className="filter-option">
                       <input
                         type="radio"
-                        checked={orderFilter === "2"}
-                        onClick={() => handleOrderFilter("2")}
+                        checked={filterFormData.order === "2"}
+                        onClick={() => handleFilterChange("order", "2")}
                       />
                       Oldest
+                    </label>
+                  </div>
+                  <div className="filter-divider" />
+                  <div className="filter-section">
+                    <div className="filter-title">Sort by status</div>
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={filterFormData.status === "false"}
+                        onClick={() => handleFilterChange("status", "false")}
+                      />
+                      Pending
+                    </label>
+
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={filterFormData.status === "true"}
+                        onClick={() => handleFilterChange("status", "true")}
+                      />
+                      Completed
+                    </label>
+                  </div>
+                  <div className="filter-divider" />
+                  <div className="filter-section">
+                    <div className="filter-title">Sort by tags</div>
+
+                    {tagListData.map((tag) => (
+                      <label key={tag.id} className="filter-option">
+                        <input
+                          type="radio"
+                          checked={filterFormData.tag === tag.id}
+                          onClick={() => handleFilterChange("tag", tag.id)}
+                        />
+                        {tag.label}
+                      </label>
+                    ))}
+                  </div>
+                  <div className="filter-divider" />
+                  <div className="filter-section">
+                    <div className="filter-title">Sort by archive</div>
+                    <label className="filter-option">
+                      <input
+                        type="radio"
+                        checked={filterFormData.archive === "true"}
+                        onClick={() => handleFilterChange("archive", "true")}
+                      />
+                      Archive
+                    </label>
+                  </div>
+                  <div className="filter-divider" />
+                  <div className="filter-section">
+                    <div className="div-flex-row div-space-between div-align-center">
+                      <span className="filter-title">Sort by due date</span>
+                      <button
+                        className="common-btn-none"
+                        onClick={handleClearDueDate}
+                      >
+                        <span className="text-sm">Clear</span>
+                      </button>
+                    </div>
+                    <label className="filter-option">
+                      <input
+                        type="date"
+                        className="date-input"
+                        value={filterFormData.dueDate || ""}
+                        onChange={(e) =>
+                          handleFilterChange("dueDate", e.target.value)
+                        }
+                      />
                     </label>
                   </div>
                 </div>
