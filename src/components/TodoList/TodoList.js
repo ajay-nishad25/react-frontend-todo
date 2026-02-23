@@ -65,7 +65,7 @@ export default function TodoList({
                       </span>
                     )}
                     {task?.is_archived && (
-                      <span className="div-align-center task-status task-archive">
+                      <span className="div-align-center task-archive">
                         <ArchiveIcon className="icon-size-18" />
                       </span>
                     )}

@@ -43,6 +43,7 @@
   --task-low-color: #1e3a8a;
   --task-someday-bg: #e9d5ff;
   --task-someday-color: #581c87;
+  --archive-task-bg: #EEF2F6;
 }
 
 /* =====================
@@ -93,6 +94,7 @@
   --task-low-color: #93c5fd;
   --task-someday-bg: rgba(88, 28, 135, 0.45);
   --task-someday-color: #d8b4fe;
+  --archive-task-bg: #eef2f621;
 }
 
 

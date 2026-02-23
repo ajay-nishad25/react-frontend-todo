@@ -556,14 +556,6 @@
     }
 }
 
-
-
-
-/* .task-status {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 999px;
-} */
 .task-status {
     font-size: 11px;
     padding: 4px 12px;
@@ -588,8 +580,10 @@
 }
 
 .task-archive {
-    background: #EEF2F6;
-    color: #5B6B7A
+    background: var(--archive-task-bg);
+    padding: 4px 4px;
+    border-radius: 999px;
+    color: #9ca3af
 }
 
 .task-date {
