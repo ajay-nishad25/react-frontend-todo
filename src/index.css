@@ -32,6 +32,17 @@
   --settings-menu-item-hover: #e5edff;
   --settings-menu-item-active: #dbe7ff;
   --theme-button-font-color: #ffffff;
+  /* Task Priority Tags */
+  --task-urgent-bg: #fecaca;
+  --task-urgent-color: #7f1d1d;
+  --task-high-bg: #fed7aa;
+  --task-high-color: #7c2d12;
+  --task-mid-bg: #c7d2fe;
+  --task-mid-color: #3730a3;
+  --task-low-bg: #bfdbfe;
+  --task-low-color: #1e3a8a;
+  --task-someday-bg: #e9d5ff;
+  --task-someday-color: #581c87;
 }
 
 /* =====================
@@ -71,6 +82,17 @@
   --settings-menu-item-hover: #383838;
   --settings-menu-item-active: #262f44a6;
   --theme-button-font-color: #d7d7d7;
+  /* Task Priority Tags */
+  --task-urgent-bg: rgba(127, 29, 29, 0.45);
+  --task-urgent-color: #fca5a5;
+  --task-high-bg: rgba(124, 45, 18, 0.45);
+  --task-high-color: #fdba74;
+  --task-mid-bg: rgba(55, 48, 163, 0.45);
+  --task-mid-color: #a5b4fc;
+  --task-low-bg: rgba(30, 58, 138, 0.45);
+  --task-low-color: #93c5fd;
+  --task-someday-bg: rgba(88, 28, 135, 0.45);
+  --task-someday-color: #d8b4fe;
 }
 
 

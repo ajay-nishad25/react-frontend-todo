@@ -221,30 +221,29 @@
     flex-wrap: wrap;
 }
 
-
 .tag-urgent {
-    background: #fecaca;
-    color: #7f1d1d;
+    background: var(--task-urgent-bg);
+    color: var(--task-urgent-color);
 }
 
 .tag-high {
-    background: #fed7aa;
-    color: #7c2d12;
+    background: var(--task-high-bg);
+    color: var(--task-high-color);
 }
 
 .tag-mid {
-    background: #c7d2fe;
-    color: #3730a3;
+    background: var(--task-mid-bg);
+    color: var(--task-mid-color);
 }
 
 .tag-low {
-    background: #bfdbfe;
-    color: #1e3a8a;
+    background: var(--task-low-bg);
+    color: var(--task-low-color);
 }
 
 .tag-someday {
-    background: #e9d5ff;
-    color: #581c87;
+    background: var(--task-someday-bg);
+    color: var(--task-someday-color);
 }
 
 .active-pill {
