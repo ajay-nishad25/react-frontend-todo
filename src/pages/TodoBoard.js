@@ -437,6 +437,15 @@ export default function TodoBoard() {
     });
   }
 
+  const getFilterActiveStatus = () => {
+    if (filterFormData) {
+      return Object.values(filterFormData).some(
+        (value) => value !== null && value !== undefined && value !== "",
+      );
+    }
+    return false;
+  };
+
   return (
     <div className="page-layout">
       <div className="page-layout-inner-container">
@@ -480,9 +489,17 @@ export default function TodoBoard() {
           </div>
 
           <div className="toolbar-actions">
+            <div className="view-toggle">
+              <button className="view-btn" onClick={toggleViewMode}>
+                {viewMode === "card" ? <ListViewIcon /> : <CardViewIcon />}
+              </button>
+            </div>
+
             <div className="filter-wrapper" ref={filterRef}>
               <button
-                className="filter-btn"
+                className={`${
+                  getFilterActiveStatus() ? "filter-btn-active" : "filter-btn"
+                }`}
                 onClick={() => setOpenFilter((prev) => !prev)}
               >
                 <FilterIcon />
@@ -582,11 +599,6 @@ export default function TodoBoard() {
                   </div>
                 </div>
               )}
-            </div>
-            <div className="view-toggle">
-              <button className="view-btn" onClick={toggleViewMode}>
-                {viewMode === "card" ? <ListViewIcon /> : <CardViewIcon />}
-              </button>
             </div>
 
             <div className="new-task-btn">

@@ -44,6 +44,7 @@
     gap: 12px;
 }
 
+.filter-btn-active,
 .filter-btn {
     display: flex;
     align-items: center;
@@ -59,6 +60,10 @@
 
 .filter-btn:hover {
     background: var(--menu-item-hover);
+}
+
+.filter-btn-active {
+    border-color: #5a6cff;
 }
 
 .new-task-btn {
