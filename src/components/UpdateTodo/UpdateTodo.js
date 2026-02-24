@@ -46,6 +46,12 @@ export default function UpdateTodo({
     { label: "Someday/Maybe", class: "tag-someday", id: 5 },
   ];
 
+  function handleClearDueDate() {
+    handleUpdateChange({
+      target: { name: "dueDate", value: "" },
+    });
+  }
+
   return (
     <div className="modal-overlay" onClick={handleCloseUpdateModal}>
       <div
@@ -167,7 +173,15 @@ export default function UpdateTodo({
                 </div>
               </div>
               <div>
-                <div className="drawer-title">Due date</div>
+                <div className="drawer-title div-flex-row div-space-between">
+                  <span>Due date</span>
+                  <button
+                    className="common-btn-none"
+                    onClick={handleClearDueDate}
+                  >
+                    <span className="text-sm">Clear</span>
+                  </button>
+                </div>
                 <input
                   type="date"
                   className="date-input"

@@ -47,6 +47,12 @@ export default function CreateTodo({
     { label: "Someday/Maybe", class: "tag-someday", id: 5 },
   ];
 
+  function handleClearDueDate() {
+    handleOnChange({
+      target: { name: "dueDate", value: "" },
+    });
+  }
+
   return (
     <div className="modal-overlay" onClick={handleCloseModal}>
       <div
@@ -165,7 +171,15 @@ export default function CreateTodo({
               </div>
 
               <div>
-                <div className="drawer-title">Due date</div>
+                <div className="drawer-title div-flex-row div-space-between">
+                  <span>Due date</span>
+                  <button
+                    className="common-btn-none"
+                    onClick={handleClearDueDate}
+                  >
+                    <span className="text-sm">Clear</span>
+                  </button>
+                </div>
                 <input
                   type="date"
                   className="date-input"

@@ -382,6 +382,7 @@ export default function TodoBoard() {
       title: updateFormData.title,
       description: updateFormData.description,
       is_completed: updateFormData.status === "completed" ? true : false,
+      due_date: updateFormData.dueDate || null,
     };
 
     if (updateFormData.tagId) {
@@ -390,10 +391,6 @@ export default function TodoBoard() {
 
     if (typeof updateFormData.archived === "boolean") {
       updatePayload.is_archived = updateFormData.archived;
-    }
-
-    if (updateFormData.dueDate) {
-      updatePayload.due_date = updateFormData.dueDate;
     }
 
     dispatch(updateTodo(updatePayload)).then(() => {
