@@ -447,19 +447,11 @@
     border: none;
     cursor: pointer;
     color: #ef4444;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.1s ease;
+    opacity: 0.7;
 }
 
-.task-card:hover .delete-btn {
-    opacity: 1;
-    visibility: visible;
-}
-
-.task-list-row:hover .delete-btn {
-    opacity: 1;
-    visibility: visible;
+.delete-btn:hover {
+    opacity: 0.8;
 }
 
 .task-desc {
