@@ -178,6 +178,7 @@ export default function UpdateTodo({
                   <button
                     className="common-btn-none"
                     onClick={handleClearDueDate}
+                    disabled={updateFormData.status === "completed"}
                   >
                     <span className="text-sm">Clear</span>
                   </button>
@@ -186,6 +187,7 @@ export default function UpdateTodo({
                   type="date"
                   className="date-input"
                   name="dueDate"
+                  disabled={updateFormData.status === "completed"}
                   value={updateFormData.dueDate || ""}
                   onChange={handleUpdateChange}
                 />
