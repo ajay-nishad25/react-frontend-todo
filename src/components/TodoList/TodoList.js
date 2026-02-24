@@ -73,7 +73,13 @@ export default function TodoList({
                   {task?.due_date && (
                     <div className="div-flex-row cg-5 div-align-center">
                       <span className="red-dot-indicator"></span>
-                      <span className="div-flex-row cg-5 div-align-center task-date">
+                      <span
+                        className={`div-flex-row cg-5 div-align-center ${
+                          task?.is_completed
+                            ? "task-due-date-completed"
+                            : "task-date"
+                        }`}
+                      >
                         {new Date(task.due_date).toLocaleDateString()}
                       </span>
                     </div>
@@ -124,7 +130,13 @@ export default function TodoList({
                     {task?.due_date && (
                       <div className="div-flex-row cg-5 div-align-center">
                         <span className="red-dot-indicator"></span>
-                        <span className="task-date">
+                        <span
+                          className={`${
+                            task?.is_completed
+                              ? "task-due-date-completed"
+                              : "task-date"
+                          }`}
+                        >
                           {new Date(task.due_date).toLocaleDateString()}
                         </span>
                       </div>

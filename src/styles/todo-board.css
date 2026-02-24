@@ -591,9 +591,14 @@
     color: #9ca3af
 }
 
+.task-due-date-completed,
 .task-date {
     font-size: 12px;
     color: #9ca3af;
+}
+
+.task-due-date-completed {
+    text-decoration-line: line-through
 }
 
 
