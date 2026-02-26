@@ -4,7 +4,6 @@ import { ReactComponent as SearchIcon } from "assets/icons/search-icon.svg";
 import { ReactComponent as FilterIcon } from "assets/icons/filter-icon.svg";
 import { ReactComponent as CardViewIcon } from "assets/icons/card-view-icon.svg";
 import { ReactComponent as ListViewIcon } from "assets/icons/list-view-icon.svg";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   createTodo,
@@ -17,8 +16,10 @@ import CreateTodo from "components/CreateTodo/CreateTodo";
 import UpdateTodo from "components/UpdateTodo/UpdateTodo";
 import DeleteConfirmationModel from "components/UpdateTodo/DeleteConfirmationModel";
 import TodoList from "components/TodoList/TodoList";
+import { useMediaQuery } from "utils/useMediaQuery";
 
 export default function TodoBoard() {
+  const isMobile = useMediaQuery("(max-width: 768px)");
   const dispatch = useDispatch();
   const todoReducer = useSelector((state) => state.todoReducer);
 
@@ -447,8 +448,8 @@ export default function TodoBoard() {
     <div className="page-layout">
       <div className="page-layout-inner-container">
         {/* task seach, filter and create section */}
-        <div className="task-toolbar">
-          <div className="search-box">
+        {isMobile && (
+          <div className="search-box-mobile">
             <SearchIcon className="search-icon" />
             <input
               type="text"
@@ -458,6 +459,20 @@ export default function TodoBoard() {
               onChange={handleSearchChange}
             />
           </div>
+        )}
+        <div className="task-toolbar">
+          {!isMobile && (
+            <div className="search-box">
+              <SearchIcon className="search-icon" />
+              <input
+                type="text"
+                placeholder="Search todo..."
+                className="search-input"
+                value={searchInput}
+                onChange={handleSearchChange}
+              />
+            </div>
+          )}
           <div className="pagination-wrapper">
             <button
               className="page-btn"
@@ -486,11 +501,13 @@ export default function TodoBoard() {
           </div>
 
           <div className="toolbar-actions">
-            <div className="view-toggle">
-              <button className="view-btn" onClick={toggleViewMode}>
-                {viewMode === "card" ? <ListViewIcon /> : <CardViewIcon />}
-              </button>
-            </div>
+            {!isMobile && (
+              <div className="view-toggle">
+                <button className="view-btn" onClick={toggleViewMode}>
+                  {viewMode === "card" ? <ListViewIcon /> : <CardViewIcon />}
+                </button>
+              </div>
+            )}
 
             <div className="filter-wrapper" ref={filterRef}>
               <button
@@ -601,7 +618,7 @@ export default function TodoBoard() {
             <div className="new-task-btn">
               <button className="primary-btn" onClick={handleOpenCreateModel}>
                 <span className="plus">+</span>
-                New Task
+                <span>Create New</span>
               </button>
             </div>
           </div>
