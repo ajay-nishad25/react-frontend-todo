@@ -320,14 +320,16 @@ export default function SettingsModal({ isClosing, onClose }) {
                         Switch between light and dark mode
                       </span>
                     </div>
-                    <label className="theme-switch">
-                      <input
-                        type="checkbox"
-                        checked={theme === "dark"}
-                        onChange={handleToggleTheme}
-                      />
-                      <span className="slider" />
-                    </label>
+                    <div className="div-flex-row">
+                      <label className="theme-switch">
+                        <input
+                          type="checkbox"
+                          checked={theme === "dark"}
+                          onChange={handleToggleTheme}
+                        />
+                        <span className="slider" />
+                      </label>
+                    </div>
                   </div>
                 </div>
               )}

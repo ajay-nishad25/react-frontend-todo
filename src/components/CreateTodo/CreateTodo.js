@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ReactComponent as LeftArrowSquareIcon } from "assets/icons/left-arrow-square.svg";
 import { ReactComponent as RightArrowSquareIcon } from "assets/icons/right-arrow-square.svg";
+import { useMediaQuery } from "utils/useMediaQuery";
 
 export default function CreateTodo({
   formData,
@@ -10,7 +11,8 @@ export default function CreateTodo({
   handleCloseModal,
   isClosing,
 }) {
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [drawerOpen, setDrawerOpen] = useState(isMobile ? false : true);
   const [isDrawerClosing, setIsDrawerClosing] = useState(false);
 
   const toggleDrawer = () => {
