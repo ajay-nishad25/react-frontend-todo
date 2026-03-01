@@ -1,11 +1,11 @@
 import axios from "axios";
-import { API_LOCAL_BASE_URL } from "api/config";
+import { API_BASE_URL } from "api/config";
 
 /**
  * Axios instance
  */
 const api = axios.create({
-  baseURL: API_LOCAL_BASE_URL,
+  baseURL: API_BASE_URL,
   timeout: 15000,
 });
 
