@@ -1,10 +1,10 @@
 # Learning backend with django
 
-# React Frontend Todo
+## React Frontend Todo
 
 A full-featured Todo application built with React, connected to a Django REST API backend. 
 
-## 🔗 Required Backend Repository
+## Required Backend Repository
 
 [django-backend-todo](https://github.com/ajay-nishad25/django-backend-todo)
 
