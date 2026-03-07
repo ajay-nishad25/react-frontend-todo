@@ -24,6 +24,16 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>Todo</title>
+  <script>
+    (function () {
+      try {
+        var theme = localStorage.getItem('selectedTheme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {
+        // ignore storage errors
+      }
+    })();
+  </script>
 </head>
 
 <body>
