@@ -8,6 +8,11 @@ export function loginApi(payload) {
       if (response) {
         localStorage.setItem("token", response.token);
         localStorage.setItem("userData", JSON.stringify(response.user_data));
+        
+        // Handle theme from backend (1 for light, 2 for dark)
+        const themeValue = response.user_data?.theme === 2 ? "dark" : "light";
+        localStorage.setItem("selectedTheme", themeValue);
+        document.documentElement.setAttribute("data-theme", themeValue);
       }
       return Promise.resolve({
         token: response.token,
@@ -54,6 +59,17 @@ export function logoutApi() {
 export function resetPasswordApi(resetPasswordPayload) {
   return api
     .post("/reset-password/", resetPasswordPayload)
+    .then((res) => {
+      return Promise.resolve(res?.data?.message);
+    })
+    .catch((error) => {
+      return Promise.reject(error?.response?.data?.error);
+    });
+}
+
+export function updateThemeApi(themeValue) {
+  return api
+    .post("/update-theme/", { theme: themeValue === "dark" ? 2 : 1 })
     .then((res) => {
       return Promise.resolve(res?.data?.message);
     })
