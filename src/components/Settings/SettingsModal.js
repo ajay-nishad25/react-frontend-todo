@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "styles/settings.css";
 import { useDispatch } from "react-redux";
-import { logoutUser, resetPassword } from "../../redux/actions/authAction";
+import { logoutUser, resetPassword, updateUserTheme } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from "assets/icons/close-icon.svg";
 import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
@@ -35,8 +35,14 @@ export default function SettingsModal({ isClosing, onClose }) {
     type: null,
     message: "",
   });
+  
+  const [themeResponse, setThemeResponse] = useState({
+    type: null,
+    message: "",
+  });
 
   const [isResetLoading, setIsResetLoading] = useState(false);
+  const [isThemeLoading, setIsThemeLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState({
     current: false,
@@ -70,6 +76,27 @@ export default function SettingsModal({ isClosing, onClose }) {
     const newTheme = theme === "light" ? "dark" : "light";
     setThemeState(newTheme);
     setTheme(newTheme);
+    
+    setIsThemeLoading(true);
+    setThemeResponse({ type: null, message: "" });
+    
+    // Update theme in backend
+    dispatch(updateUserTheme(newTheme))
+      .then((res) => {
+        setThemeResponse({
+          type: "success",
+          message: res || "Theme updated successfully",
+        });
+      })
+      .catch((err) => {
+        setThemeResponse({
+          type: "error",
+          message: err || "Failed to update theme",
+        });
+      })
+      .finally(() => {
+        setIsThemeLoading(false);
+      });
   }
 
   function handleResetInputChange(e) {
@@ -104,6 +131,12 @@ export default function SettingsModal({ isClosing, onClose }) {
         confirmPassword: { status: false, message: "" },
       });
       setResetResponse({
+        type: null,
+        message: "",
+      });
+    }
+    if (tab !== "appearance") {
+      setThemeResponse({
         type: null,
         message: "",
       });
@@ -206,6 +239,15 @@ export default function SettingsModal({ isClosing, onClose }) {
     }, 5000);
     return () => clearTimeout(timer);
   }, [resetResponse.type]);
+  
+  // auto dismiss theme change alter msg
+  useEffect(() => {
+    if (!themeResponse.type) return;
+    const timer = setTimeout(() => {
+      setThemeResponse({ type: null, message: "" });
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [themeResponse.type]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -326,10 +368,41 @@ export default function SettingsModal({ isClosing, onClose }) {
                           type="checkbox"
                           checked={theme === "dark"}
                           onChange={handleToggleTheme}
+                          disabled={isThemeLoading}
                         />
                         <span className="slider" />
                       </label>
                     </div>
+                  </div>
+
+                  <div>
+                    {themeResponse.type && (
+                      <div
+                        className={`reset-alert ${
+                          themeResponse.type === "success"
+                            ? "reset-alert-success"
+                            : "reset-alert-error"
+                        }`}
+                      >
+                        <div className="div-flex-row div-align-center cg-10">
+                          <span className="reset-alert-icon">
+                            {themeResponse.type === "success" ? "✔" : "⚠"}
+                          </span>
+                          <span className="reset-alert-text">
+                            {themeResponse.message}
+                          </span>
+                        </div>
+
+                        <button
+                          className="reset-alert-dismiss"
+                          onClick={() =>
+                            setThemeResponse({ type: null, message: "" })
+                          }
+                        >
+                          Dismiss
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
