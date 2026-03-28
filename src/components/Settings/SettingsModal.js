@@ -8,9 +8,10 @@ import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
 import { ReactComponent as ProfileIcon } from "assets/icons/profile-icon.svg";
 import { ReactComponent as AppearanceIcon } from "assets/icons/apperance-icon.svg";
 import { ReactComponent as SecurityIcon } from "assets/icons/security-icon.svg";
-import { ReactComponent as EyeOpenIcon } from "assets/icons/eye-open.svg";
-import { ReactComponent as EyeClosedIcon } from "assets/icons/eye-closed.svg";
 import { getTheme, setTheme } from "utils/theme";
+import ProfileTab from "./ProfileTab";
+import AppearanceTab from "./AppearanceTab";
+import SecurityTab from "./SecurityTab";
 
 export default function SettingsModal({ isClosing, onClose }) {
   const dispatch = useDispatch();
@@ -320,249 +321,28 @@ export default function SettingsModal({ isClosing, onClose }) {
             </div>
 
             <div className="settings-tab-content">
-              {activeTab === "profile" && (
-                <div className="div-flex-column rg-10 padding-v5">
-                  <span className="content-item-title">
-                    Manage your personal information associated with your
-                    account.
-                  </span>
-                  <div className="div-flex-column rg-10">
-                    <div className="div-flex-row div-space-between div-align-center content-item-row">
-                      <div className="content-item-text div-flex-column">
-                        <span className="content-item-title">Username</span>
-                        <span className="content-item-subtitle">
-                          {user_name || "—"}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="div-flex-row div-space-between div-align-center content-item-row">
-                      <div className="content-item-text div-flex-column">
-                        <span className="content-item-title">Email</span>
-                        <span className="content-item-subtitle">
-                          {email || "—"}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="profile-hint">
-                    Profile editing will be available soon.
-                  </div>
-                </div>
-              )}
+              {activeTab === "profile" && <ProfileTab userName={user_name} email={email} />}
               {activeTab === "appearance" && (
-                <div className="div-flex-column rg-10 padding-v5">
-                  <span className="content-item-title">
-                    Customize how the application looks on your device.
-                  </span>
-
-                  <div className="div-flex-row div-space-between div-align-center content-item-row">
-                    <div className="content-item-text div-flex-column">
-                      <span className="content-item-title">Theme</span>
-                      <span className="content-item-subtitle">
-                        Switch between light and dark mode
-                      </span>
-                    </div>
-                    <div className="div-flex-row">
-                      <label className="theme-switch">
-                        <input
-                          type="checkbox"
-                          checked={theme === "dark"}
-                          onChange={handleToggleTheme}
-                          disabled={isThemeLoading}
-                        />
-                        <span className="slider" />
-                      </label>
-                    </div>
-                  </div>
-
-                  <div>
-                    {themeResponse.type && (
-                      <div
-                        className={`reset-alert ${
-                          themeResponse.type === "success"
-                            ? "reset-alert-success"
-                            : "reset-alert-error"
-                        }`}
-                      >
-                        <div className="div-flex-row div-align-center cg-10">
-                          <span className="reset-alert-icon">
-                            {themeResponse.type === "success" ? "✔" : "⚠"}
-                          </span>
-                          <span className="reset-alert-text">
-                            {themeResponse.message}
-                          </span>
-                        </div>
-
-                        <button
-                          className="reset-alert-dismiss"
-                          onClick={() =>
-                            setThemeResponse({ type: null, message: "" })
-                          }
-                        >
-                          Dismiss
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <AppearanceTab
+                  theme={theme}
+                  handleToggleTheme={handleToggleTheme}
+                  isThemeLoading={isThemeLoading}
+                  themeResponse={themeResponse}
+                  setThemeResponse={setThemeResponse}
+                />
               )}
               {activeTab === "security" && (
-                <div className="div-flex-column-h100 div-space-between rg-10 padding-v5">
-                  <div className="div-flex-column rg-10">
-                    <span className="content-item-title">
-                      Change your account password to keep your account secure.
-                    </span>
-                    <div className="div-flex-column security-row">
-                      <label className="content-item-title">
-                        Current Password
-                      </label>
-                      <div className="div-flex-column">
-                        <div className="password-field">
-                          <input
-                            type={showPassword.current ? "text" : "password"}
-                            name="currentPassword"
-                            placeholder="Enter current password"
-                            value={resetFormData.currentPassword}
-                            onChange={handleResetInputChange}
-                            className="security-input"
-                          />
-                          <span
-                            className="password-toggle"
-                            onClick={() => togglePasswordVisibility("current")}
-                          >
-                            {showPassword.current ? (
-                              <EyeClosedIcon />
-                            ) : (
-                              <EyeOpenIcon />
-                            )}
-                          </span>
-                        </div>
-                        <div className="error-slot">
-                          <span
-                            className={`input-error-message ${
-                              resetFormError.currentPassword.status
-                                ? "visible"
-                                : ""
-                            }`}
-                          >
-                            {resetFormError.currentPassword.message}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="div-flex-column security-row">
-                      <label className="content-item-title">New Password</label>
-                      <div className="div-flex-column">
-                        <div className="password-field">
-                          <input
-                            type={showPassword.new ? "text" : "password"}
-                            name="newPassword"
-                            placeholder="Enter new password"
-                            value={resetFormData.newPassword}
-                            onChange={handleResetInputChange}
-                            className="security-input"
-                          />
-                          <span
-                            className="password-toggle"
-                            onClick={() => togglePasswordVisibility("new")}
-                          >
-                            {showPassword.new ? (
-                              <EyeClosedIcon />
-                            ) : (
-                              <EyeOpenIcon />
-                            )}
-                          </span>
-                        </div>
-                        <div className="error-slot">
-                          <span
-                            className={`input-error-message ${
-                              resetFormError.newPassword.status ? "visible" : ""
-                            }`}
-                          >
-                            {resetFormError.newPassword.message}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="div-flex-column security-row">
-                      <label className="content-item-title">
-                        Confirm Password
-                      </label>
-                      <div className="div-flex-column">
-                        <div className="password-field">
-                          <input
-                            type={showPassword.confirm ? "text" : "password"}
-                            name="confirmPassword"
-                            placeholder="Confirm new password"
-                            value={resetFormData.confirmPassword}
-                            onChange={handleResetInputChange}
-                            className="security-input"
-                          />
-                          <span
-                            className="password-toggle"
-                            onClick={() => togglePasswordVisibility("confirm")}
-                          >
-                            {showPassword.confirm ? (
-                              <EyeClosedIcon />
-                            ) : (
-                              <EyeOpenIcon />
-                            )}
-                          </span>
-                        </div>
-                        <div className="error-slot">
-                          <span
-                            className={`input-error-message ${
-                              resetFormError.confirmPassword.status
-                                ? "visible"
-                                : ""
-                            }`}
-                          >
-                            {resetFormError.confirmPassword.message}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="div-flex-row-w100 div-flex-end padding-v5">
-                      <button
-                        className="theme-btn"
-                        onClick={handleResetPassword}
-                        disabled={isResetLoading}
-                      >
-                        Reset Password
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    {resetResponse.type && (
-                      <div
-                        className={`reset-alert ${
-                          resetResponse.type === "success"
-                            ? "reset-alert-success"
-                            : "reset-alert-error"
-                        }`}
-                      >
-                        <div className="div-flex-row div-align-center cg-10">
-                          <span className="reset-alert-icon">
-                            {resetResponse.type === "success" ? "✔" : "⚠"}
-                          </span>
-                          <span className="reset-alert-text">
-                            {resetResponse.message}
-                          </span>
-                        </div>
-
-                        <button
-                          className="reset-alert-dismiss"
-                          onClick={() =>
-                            setResetResponse({ type: null, message: "" })
-                          }
-                        >
-                          Dismiss
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <SecurityTab
+                  resetFormData={resetFormData}
+                  handleResetInputChange={handleResetInputChange}
+                  showPassword={showPassword}
+                  togglePasswordVisibility={togglePasswordVisibility}
+                  resetFormError={resetFormError}
+                  handleResetPassword={handleResetPassword}
+                  isResetLoading={isResetLoading}
+                  resetResponse={resetResponse}
+                  setResetResponse={setResetResponse}
+                />
               )}
             </div>
           </div>
