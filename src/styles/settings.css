@@ -52,7 +52,7 @@
 .settings-menu-item.active {
   background: var(--settings-menu-item-active);
   color: #2563eb;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .settings-logout {
