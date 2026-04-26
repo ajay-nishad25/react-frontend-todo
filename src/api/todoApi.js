@@ -31,7 +31,7 @@ export function getTodosApi(
   if (tagFilter !== null) params.tag_id = tagFilter;
   if (dueDateFilter !== "") params.due_date = dueDateFilter;
 
-  const batchSize = paginationBatchSize || localStorage.getItem("pageSize");
+  const batchSize = paginationBatchSize || "12";
   if (batchSize) {
     params.pagination_batch_size = batchSize;
   }

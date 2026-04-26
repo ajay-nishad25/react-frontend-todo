@@ -112,6 +112,7 @@ export default function TodoBoard() {
         filterFormData?.tag,
         filterFormData?.archive,
         filterFormData?.dueDate,
+        localStorage.getItem("pageSize") || "12"
       ),
     );
   }, [
@@ -264,6 +265,7 @@ export default function TodoBoard() {
           filterFormData?.tag,
           filterFormData?.archive,
           filterFormData?.dueDate,
+          localStorage.getItem("pageSize") || "12"
         ),
       );
       setPage(1);
@@ -326,6 +328,7 @@ export default function TodoBoard() {
           filterFormData?.tag,
           filterFormData?.archive,
           filterFormData?.dueDate,
+          localStorage.getItem("pageSize") || "12"
         ),
       );
       // setPage(1);
@@ -405,6 +408,7 @@ export default function TodoBoard() {
           filterFormData?.tag,
           filterFormData?.archive,
           filterFormData?.dueDate,
+          localStorage.getItem("pageSize") || "12"
         ),
       );
     });
