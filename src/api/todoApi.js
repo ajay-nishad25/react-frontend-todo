@@ -19,6 +19,7 @@ export function getTodosApi(
   tagFilter,
   archiveFilter,
   dueDateFilter,
+  paginationBatchSize,
 ) {
   const params = {
     search: debouncedSearch,
@@ -29,6 +30,12 @@ export function getTodosApi(
   if (orderFilter) params.sort_order = orderFilter;
   if (tagFilter !== null) params.tag_id = tagFilter;
   if (dueDateFilter !== "") params.due_date = dueDateFilter;
+
+  const batchSize = paginationBatchSize || localStorage.getItem("pageSize");
+  if (batchSize) {
+    params.pagination_batch_size = batchSize;
+  }
+
   return api
     .get("/get-todos/", { params })
     .then((res) => {

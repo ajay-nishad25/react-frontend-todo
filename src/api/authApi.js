@@ -13,6 +13,7 @@ export function loginApi(payload) {
         const themeValue = response.user_data?.theme === 2 ? "dark" : "light";
         localStorage.setItem("selectedTheme", themeValue);
         document.documentElement.setAttribute("data-theme", themeValue);
+        localStorage.setItem("pageSize", "12");
       }
       return Promise.resolve({
         token: response.token,
@@ -49,6 +50,7 @@ export function logoutApi() {
       document.documentElement.setAttribute("data-theme", "light");
       localStorage.removeItem("todoFilters");
       localStorage.removeItem("todoViewMode");
+      localStorage.removeItem("pageSize");
       return Promise.resolve(res?.data?.message);
     })
     .catch((error) => {
