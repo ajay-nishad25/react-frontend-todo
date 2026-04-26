@@ -29,6 +29,7 @@ export const getTodos =
     tagFilter,
     archiveFilter,
     dueDateFilter,
+    paginationBatchSize,
   ) =>
   (dispatch) => {
     return getTodosApi(
@@ -39,6 +40,7 @@ export const getTodos =
       tagFilter,
       archiveFilter,
       dueDateFilter,
+      paginationBatchSize,
     )
       .then((data) => {
         dispatch({

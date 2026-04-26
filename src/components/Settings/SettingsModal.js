@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "styles/settings.css";
 import { useDispatch } from "react-redux";
-import { logoutUser, resetPassword, updateUserTheme } from "../../redux/actions/authAction";
+import {
+  logoutUser,
+  resetPassword,
+  updateUserTheme,
+} from "../../redux/actions/authAction";
+import { getTodos } from "../../redux/actions/todoAction";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as CloseIcon } from "assets/icons/close-icon.svg";
 import { ReactComponent as LogoutLogo } from "assets/icons/logout-icon.svg";
@@ -19,6 +24,10 @@ export default function SettingsModal({ isClosing, onClose }) {
 
   const [activeTab, setActiveTab] = useState("profile");
   const [theme, setThemeState] = useState(getTheme());
+  const pageOptions = ["12", "15", "18", "21", "24"];
+  const [pageSize, setPageSize] = useState(
+    localStorage.getItem("pageSize") || "12",
+  );
 
   const [resetFormData, setResetFormData] = useState({
     currentPassword: "",
@@ -36,7 +45,7 @@ export default function SettingsModal({ isClosing, onClose }) {
     type: null,
     message: "",
   });
-  
+
   const [themeResponse, setThemeResponse] = useState({
     type: null,
     message: "",
@@ -77,10 +86,10 @@ export default function SettingsModal({ isClosing, onClose }) {
     const newTheme = theme === "light" ? "dark" : "light";
     setThemeState(newTheme);
     setTheme(newTheme);
-    
+
     setIsThemeLoading(true);
     setThemeResponse({ type: null, message: "" });
-    
+
     // Update theme in backend
     dispatch(updateUserTheme(newTheme))
       .then((res) => {
@@ -232,6 +241,39 @@ export default function SettingsModal({ isClosing, onClose }) {
       });
   }
 
+  function handlePageSizeChange(value) {
+    if(value === pageSize){
+      return;
+    }
+
+    setPageSize(value);
+    localStorage.setItem("pageSize", value);
+
+    const storedFilters = localStorage.getItem("todoFilters");
+    let statusFilter = null, orderFilter = null, tagFilter = null, archiveFilter = null, dueDateFilter = "";
+    if (storedFilters) {
+      const parsed = JSON.parse(storedFilters);
+      statusFilter = parsed.status || null;
+      orderFilter = parsed.order || null;
+      tagFilter = parsed.tag ? Number(parsed.tag) : null;
+      archiveFilter = parsed.archive || null;
+      dueDateFilter = parsed.dueDate || "";
+    }
+
+    dispatch(
+      getTodos(
+        1,
+        "",
+        statusFilter,
+        orderFilter,
+        tagFilter,
+        archiveFilter,
+        dueDateFilter,
+        value
+      )
+    );
+  }
+
   // auto dismiss alter msg
   useEffect(() => {
     if (!resetResponse.type) return;
@@ -240,7 +282,7 @@ export default function SettingsModal({ isClosing, onClose }) {
     }, 5000);
     return () => clearTimeout(timer);
   }, [resetResponse.type]);
-  
+
   // auto dismiss theme change alter msg
   useEffect(() => {
     if (!themeResponse.type) return;
@@ -321,7 +363,9 @@ export default function SettingsModal({ isClosing, onClose }) {
             </div>
 
             <div className="settings-tab-content">
-              {activeTab === "profile" && <ProfileTab userName={user_name} email={email} />}
+              {activeTab === "profile" && (
+                <ProfileTab userName={user_name} email={email} />
+              )}
               {activeTab === "appearance" && (
                 <AppearanceTab
                   theme={theme}
@@ -329,6 +373,9 @@ export default function SettingsModal({ isClosing, onClose }) {
                   isThemeLoading={isThemeLoading}
                   themeResponse={themeResponse}
                   setThemeResponse={setThemeResponse}
+                  pageOptions={pageOptions}
+                  pageSize={pageSize}
+                  handlePageSizeChange={handlePageSizeChange}
                 />
               )}
               {activeTab === "security" && (

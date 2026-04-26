@@ -213,3 +213,52 @@
   width: 18px;
   height: 18px;
 }
+
+.items-per-page-options {
+  padding-top: 10px;
+  gap: 16px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.radio-option input {
+  display: none;
+}
+
+/* outer circle */
+.custom-radio {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--text-secondary);
+  border-radius: 50%;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* inner dot */
+.radio-option input:checked+.custom-radio {
+  border-color: #2563eb;
+}
+
+.radio-option input:checked+.custom-radio::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #2563eb;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.radio-label {
+  font-weight: 500;
+}

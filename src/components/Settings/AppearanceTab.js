@@ -6,6 +6,9 @@ export default function AppearanceTab({
   isThemeLoading,
   themeResponse,
   setThemeResponse,
+  pageOptions,
+  pageSize,
+  handlePageSizeChange,
 }) {
   return (
     <div className="div-flex-column rg-10 padding-v5">
@@ -30,6 +33,30 @@ export default function AppearanceTab({
             />
             <span className="slider" />
           </label>
+        </div>
+      </div>
+
+      <div className="div-flex-row div-space-between div-align-center content-item-row">
+        <div className="content-item-text div-flex-column">
+          <span className="content-item-title">Items per page</span>
+          <span className="content-item-subtitle">
+            Set the number of records displayed per page
+          </span>
+          <div className="div-flex-row items-per-page-options">
+            {pageOptions.map((option) => (
+              <label key={option} className="radio-option">
+                <input
+                  type="radio"
+                  name="pageSize"
+                  value={option}
+                  checked={pageSize === option}
+                  onChange={() => handlePageSizeChange(option)}
+                />
+                <span className="custom-radio" />
+                <span className="radio-label">{option}</span>
+              </label>
+            ))}
+          </div>
         </div>
       </div>
 
