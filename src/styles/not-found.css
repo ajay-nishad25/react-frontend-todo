@@ -1,0 +1,137 @@
+/* =====================
+   404 NOT FOUND PAGE
+===================== */
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--bg-main);
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Decorative background gradient orbs */
+.not-found-container::before,
+.not-found-container::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.not-found-container::before {
+  width: 400px;
+  height: 400px;
+  background: var(--primary);
+  top: -100px;
+  right: -80px;
+}
+
+.not-found-container::after {
+  width: 300px;
+  height: 300px;
+  background: var(--danger);
+  bottom: -60px;
+  left: -60px;
+}
+
+.not-found-content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+}
+
+/* Large "404" heading */
+.not-found-code {
+  font-size: 8rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 0 0 0.25rem;
+  background: linear-gradient(135deg, var(--primary), var(--danger));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: notFoundPulse 3s ease-in-out infinite;
+}
+
+.not-found-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem;
+}
+
+.not-found-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0 0 2rem;
+  line-height: 1.6;
+}
+
+/* CTA Button */
+.not-found-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  box-shadow: 0 4px 14px rgba(90, 108, 255, 0.3);
+}
+
+.not-found-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90, 108, 255, 0.45);
+}
+
+.not-found-button:active {
+  transform: translateY(0);
+}
+
+.not-found-button svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.not-found-button:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Subtle pulse animation on the 404 text */
+@keyframes notFoundPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .not-found-code {
+    font-size: 5rem;
+  }
+
+  .not-found-title {
+    font-size: 1.2rem;
+  }
+
+  .not-found-description {
+    font-size: 0.875rem;
+  }
+}
