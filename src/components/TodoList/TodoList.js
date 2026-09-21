@@ -60,7 +60,7 @@ export default function TodoList({
                       {task.is_completed ? "Completed" : "Pending"}
                     </span>
                     {task.tag && (
-                      <span className={`task-status ${tagClass || ""}`}>
+                      <span className={`task-status ${tagClass || ""} ${task?.is_completed ? "task-tag-completed" : ""}`}>
                         {task.tag}
                       </span>
                     )}
@@ -119,7 +119,7 @@ export default function TodoList({
 
                     {task.tag && (
                       <span className={`task-status ${tagClass || ""}`}>
-                        {task.tag}
+                        {task.tag} |||
                       </span>
                     )}
                     {task?.is_archived && (
