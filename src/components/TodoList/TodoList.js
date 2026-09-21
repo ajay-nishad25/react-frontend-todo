@@ -25,7 +25,7 @@ export default function TodoList({
             const tagClass = TAG_MAP[task.tag];
             return (
               <div
-                className="task-card cursor-pointer"
+                className={`task-card cursor-pointer${task.is_completed ? " task-completed" : ""}`}
                 key={task.id}
                 onClick={() => openTooUpdateModel(task)}
               >
@@ -46,7 +46,7 @@ export default function TodoList({
                     <DeleteIcon />
                   </button>
                 </div>
-                <h3 className="task-title">{task.title}</h3>
+                <h3 className={`task-title${task.is_completed ? " task-title-completed" : ""}`}>{task.title}</h3>
                 <p className="task-desc">
                   {task.description?.trim() ? task.description : "N/A"}
                 </p>
@@ -97,11 +97,11 @@ export default function TodoList({
             return (
               <div
                 key={task.id}
-                className="task-list-row cursor-pointer"
+                className={`task-list-row cursor-pointer${task.is_completed ? " task-completed" : ""}`}
                 onClick={() => openTooUpdateModel(task)}
               >
                 <div className="task-list-main">
-                  <div className="task-title">{task.title}</div>
+                  <div className={`task-title${task.is_completed ? " task-title-completed" : ""}`}>{task.title}</div>
                   <div className="task-desc">
                     {task.description?.trim() ? task.description : "N/A"}
                   </div>

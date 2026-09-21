@@ -120,3 +120,46 @@ textarea,
 select {
   font-family: inherit;
 }
+
+/* ── Sleek custom scrollbar ── */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(90, 108, 255, 0.45);
+  border-radius: 999px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(90, 108, 255, 0.8);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Dark theme scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(88, 166, 255, 0.35);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(88, 166, 255, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(90, 108, 255, 0.45) transparent;
+}
+
+[data-theme="dark"] * {
+  scrollbar-color: rgba(88, 166, 255, 0.35) transparent;
+}

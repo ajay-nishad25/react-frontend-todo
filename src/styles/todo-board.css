@@ -656,6 +656,41 @@
     opacity: 0.75;
 }
 
+/* ── Completed task: subtle faded look ── */
+/* Light theme */
+.task-completed.task-card,
+.task-completed.task-list-row {
+    opacity: 0.78;
+    filter: grayscale(15%);
+    border-color: #e5e7eb;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.task-completed.task-card:hover,
+.task-completed.task-list-row:hover {
+    opacity: 0.9;
+    border-color: #5a6cff;
+}
+
+/* Title subtle fade for completed tasks */
+.task-title-completed {
+    opacity: 0.7;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] .task-completed.task-card,
+[data-theme="dark"] .task-completed.task-list-row {
+    opacity: 0.65;
+    filter: grayscale(20%);
+    border-color: #4a4a4a7c;
+}
+
+[data-theme="dark"] .task-completed.task-card:hover,
+[data-theme="dark"] .task-completed.task-list-row:hover {
+    opacity: 0.82;
+    border-color: #58a6ff;
+}
+
 
 /* CONFIRM MODAL */
 
