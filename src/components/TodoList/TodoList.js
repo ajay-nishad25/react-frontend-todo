@@ -118,8 +118,8 @@ export default function TodoList({
                     </span>
 
                     {task.tag && (
-                      <span className={`task-status ${tagClass || ""}`}>
-                        {task.tag} |||
+                      <span className={`task-status ${tagClass || ""} ${task?.is_completed ? "task-tag-completed" : ""}`}>
+                        {task.tag}
                       </span>
                     )}
                     {task?.is_archived && (

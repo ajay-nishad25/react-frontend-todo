@@ -640,7 +640,20 @@
 }
 
 .task-tag-completed {
-    text-decoration-line: line-through;
+    position: relative;
+}
+
+.task-tag-completed::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    background-color: currentColor;
+    pointer-events: none;
+    opacity: 0.75;
 }
 
 
