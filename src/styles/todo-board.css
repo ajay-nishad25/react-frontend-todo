@@ -467,10 +467,6 @@
 .task-card:hover {
     --card-scale: 1.03;
     border-color: #5a6cff;
-    box-shadow:
-        0 4px 6px rgba(90, 108, 255, 0.04),
-        0 12px 28px rgba(90, 108, 255, 0.13),
-        0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .task-card-header {
@@ -569,10 +565,6 @@
 .task-list-row:hover {
     --row-scale: 1.015;
     border-color: #5a6cff;
-    box-shadow:
-        0 4px 6px rgba(90, 108, 255, 0.04),
-        0 8px 22px rgba(90, 108, 255, 0.11),
-        0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .task-list-main {
@@ -701,18 +693,10 @@
 
 /* ── Dark theme hover glow override ── */
 [data-theme="dark"] .task-card:hover {
-    box-shadow:
-        0 4px 6px rgba(88, 166, 255, 0.05),
-        0 12px 28px rgba(88, 166, 255, 0.12),
-        0 1px 3px rgba(0, 0, 0, 0.15);
     border-color: #5a6cff;
 }
 
 [data-theme="dark"] .task-list-row:hover {
-    box-shadow:
-        0 4px 6px rgba(88, 166, 255, 0.04),
-        0 8px 22px rgba(88, 166, 255, 0.10),
-        0 1px 3px rgba(0, 0, 0, 0.12);
     border-color: #5a6cff;
 }
 
@@ -738,9 +722,6 @@
 .task-completed.task-card:hover,
 .task-completed.task-list-row:hover {
     border-color: #86efac;
-    box-shadow:
-        0 3px 6px rgba(34, 197, 94, 0.07),
-        0 6px 14px rgba(34, 197, 94, 0.09);
 }
 
 /* Title style for completed tasks */
@@ -762,9 +743,6 @@
 [data-theme="dark"] .task-completed.task-card:hover,
 [data-theme="dark"] .task-completed.task-list-row:hover {
     border-color: rgba(134, 239, 172, 0.4);
-    box-shadow:
-        0 3px 6px rgba(74, 222, 128, 0.06),
-        0 6px 14px rgba(74, 222, 128, 0.09);
 }
 
 
