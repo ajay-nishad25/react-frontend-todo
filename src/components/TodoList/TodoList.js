@@ -2,6 +2,20 @@ import React from "react";
 import { ReactComponent as DeleteIcon } from "assets/icons/delete-icon.svg";
 import { ReactComponent as ArchiveIcon } from "assets/icons/archive-icon.svg";
 
+// Formats an ISO date string to DD/MM/YY.
+// For date-only strings (YYYY-MM-DD) we append T00:00:00 so the local
+// date is used instead of UTC, preventing an off-by-one-day issue.
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const isDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(dateStr);
+  const date = new Date(isDateOnly ? `${dateStr}T00:00:00` : dateStr);
+  if (isNaN(date)) return "";
+  const dd = String(date.getDate()).padStart(2, "0");
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const yy = String(date.getFullYear()).slice(-2);
+  return `${dd}/${mm}/${yy}`;
+};
+
 export default function TodoList({
   viewMode,
   todoDataList,
@@ -31,7 +45,7 @@ export default function TodoList({
               >
                 <div className="task-card-header">
                   <span className="task-date">
-                    {new Date(task.created_at).toLocaleDateString()}
+                    {formatDate(task.created_at)}
                   </span>
                   <button
                     className="delete-btn"
@@ -80,7 +94,7 @@ export default function TodoList({
                             : "task-date"
                         }`}
                       >
-                        {new Date(task.due_date).toLocaleDateString()}
+                        {formatDate(task.due_date)}
                       </span>
                     </div>
                   )}
@@ -137,14 +151,14 @@ export default function TodoList({
                               : "task-date"
                           }`}
                         >
-                          {new Date(task.due_date).toLocaleDateString()}
+                          {formatDate(task.due_date)}
                         </span>
                       </div>
                     )}
                   </div>
 
                   <span className="task-date">
-                    {new Date(task.created_at).toLocaleDateString()}
+                    {formatDate(task.created_at)}
                   </span>
 
                   <button
