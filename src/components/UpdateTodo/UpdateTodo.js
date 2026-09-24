@@ -154,24 +154,23 @@ export default function UpdateTodo({
               </div>
 
               <div>
-                <div className="drawer-title">Archive </div>
+                <div className="drawer-title">Archive</div>
                 <div className="div-flex-row-w100 cg-5">
-                  <button
-                    className={`task-status ${
-                      updateFormData.archived ? "active-pill" : ""
-                    }`}
-                    onClick={() => handleExtraDataInput("archived", true)}
-                  >
-                    Archive
-                  </button>
-                  <button
-                    className={`task-status ${
-                      updateFormData.archived === false ? "active-pill" : ""
-                    }`}
-                    onClick={() => handleExtraDataInput("archived", false)}
-                  >
-                    Unarchive
-                  </button>
+                  {updateFormData.archived ? (
+                    <button
+                      className="task-status active-pill"
+                      onClick={() => handleExtraDataInput("archived", false)}
+                    >
+                      Unarchive
+                    </button>
+                  ) : (
+                    <button
+                      className="task-status"
+                      onClick={() => handleExtraDataInput("archived", true)}
+                    >
+                      Archive
+                    </button>
+                  )}
                 </div>
               </div>
               <div>
