@@ -5,7 +5,7 @@ import {
   logoutApi,
   resetPasswordApi,
   updateThemeApi,
-} from "api/authApi.js";
+} from "api/authApi";
 
 export const loginUser = (payload) => (dispatch) => {
   return loginApi(payload)
