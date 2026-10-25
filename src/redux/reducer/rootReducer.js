@@ -8,9 +8,11 @@ const appReducer = combineReducers({
   todoReducer,
 });
 
-const rootReducer = (state, action) => {
+const rootReducer = (state = {}, action) => {
   if (action.type === LOGOUT) {
-    state = undefined; // resets every reducer to its initialState
+    // Reset to initial state by providing empty object;
+    // each reducer will use its default initial state
+    return appReducer({}, action);
   }
   return appReducer(state, action);
 };
